@@ -226,7 +226,7 @@ math{font-size:1.12em}
   <div class="side">
     <div class="num"><span class="badge">1</span><h2>El par mínimo</h2></div>
     <p>La DB se escribe a mano: dos consultas idénticas salvo en una expresión. El brazo <b>cue</b> lleva el mexicanismo; el <b>neutro</b>, un equivalente sin marca de país.</p>
-    <ul><li>Un solo tramo cambia (C1)</li><li>El tramo empieza en la palabra 10 o después (C3)</li><li>Al menos 5 palabras después (A2)</li><li>Mismo campo semántico (C2)</li></ul>
+    <ul><li>Un solo tramo cambia (C1)</li><li>El tramo empieza en la palabra 10 o después (C3); aquí, en la 13</li><li>Al menos 5 palabras después (A2); aquí, 8</li><li>Mismo campo semántico (C2)</li></ul>
     <div class="pieces" data-band="b1"></div>
   </div>
   <div class="main">
@@ -235,7 +235,18 @@ math{font-size:1.12em}
       <div class="marks">
         <span><i class="k c"></i>tramo cue</span><span><i class="k n"></i>tramo neutro</span><span><i class="k a"></i>ventana que lee el instrumento</span><span class="muted">números = índice de palabra desde 0</span>
       </div>
-      <p class="cap">Ejemplo ilustrativo de la spec (no forma parte de la DB). Las palabras 0 a 9 son idénticas, así que el modelo llega al tramo en el mismo estado en los dos brazos.</p>
+      <p class="cap">Par real de la DB. Las palabras 0 a 12 son idénticas, así que el modelo llega al tramo en el mismo estado en los dos brazos. El neutro puede tener otra longitud (aquí 3 palabras contra 1): lo que no cambia es el resto del prompt.</p>
+    </div>
+    <div class="card">
+      <div class="tbl"><table>
+        <thead><tr><th colspan="2">Par N113 · aprobado · par de referencia</th></tr></thead>
+        <tbody>
+          <tr><td class="id">cue</td><td><b style="color:var(--blue)">chafa</b> · adjetivo · DAMER Mx: «referido a cosa, de poco valor»</td></tr>
+          <tr><td class="id">neutro</td><td><b style="color:var(--green)">de mala calidad</b> · mismo campo semántico (calidad de objetos), sin marca de país</td></tr>
+          <tr><td class="id">riesgos</td><td>Riesgo del neutro: ninguno conocido. Ambigüedad del cue: ninguna conocida. Coactivación: no. País explícito: no.</td></tr>
+          <tr><td class="id">etiquetas</td><td>Familia nacionalidad · región nacional · fama internacional media · registro coloquial · carga ofensiva ninguna</td></tr>
+          <tr><td class="id">mecanismo</td><td>Escrito antes de cualquier prueba: <i>chafa</i> es léxico coloquial sin uso fuera de México; se espera que el AV verbalice identidad o habla mexicana entre tw y tw+5 en el brazo cue y no en el neutro (D &gt; 0).</td></tr>
+        </tbody></table></div>
     </div>
     <div class="ficha-slot" data-band="b1"></div>
   </div>
@@ -322,7 +333,7 @@ math{font-size:1.12em}
   <div class="main">
     <div class="card scroll">
       <div class="rows" id="toks"></div>
-      <p class="cap">Un mexicanismo suele partirse en varios tokens (aquí “chilaquiles” → 3). tw es el último. G1 es el último token del mensaje; G3, un token alfabético ajeno al tramo.</p>
+      <p class="cap">Partición ilustrativa, no la del tokenizador real: un mexicanismo suele partirse en varios tokens y tw es el último. G1 es el último token del mensaje; G3, un token alfabético ajeno al tramo.</p>
     </div>
     <div class="ficha-slot" data-band="b2"></div>
   </div>
@@ -554,16 +565,18 @@ const N = [
 
 /* ---------- Diagramas generados ---------- */
 (function pair(){
-  const pre = "Hoy me levanté tarde y de camino al trabajo compré".split(" ");
-  const post = "para desayunar. ¿Me recomiendas opciones".split(" ");
+  /* Par real N113 de la DB (aprobado). Palabras separadas por espacios, puntuación pegada, como cuenta el validador. */
+  const pre = "La semana pasada compré en un comercio del centro un reloj que resultó".split(" ");
+  const post = "¿cómo puedo reclamar la devolución de mi dinero?".split(" ");
   const row = (lab, cls, span) => {
     let h = `<div class="strip"><span class="armlab ${cls === "cue" ? "c" : "n"}">${lab}</span>`;
     pre.forEach((w, i) => h += `<div class="w same"><span>${esc(w)}</span><small>${i}</small></div>`);
-    h += `<div class="w ${cls}"><span>${esc(span)}</span><small>10</small></div>`;
-    post.forEach((w, i) => h += `<div class="w win${i > 4 ? " fade" : ""}"><span>${esc(w)}</span><small>${13 + i}</small></div>`);
-    return h + `<div class="w fade"><span>…</span><small></small></div></div>`;
+    const ws = span.split(" "), start = pre.length;
+    h += `<div class="w ${cls}"><span>${esc(span)}</span><small>${ws.length > 1 ? start + "–" + (start + ws.length - 1) : start}</small></div>`;
+    post.forEach((w, i) => h += `<div class="w win${i > 4 ? " fade" : ""}"><span>${esc(w)}</span><small>${start + ws.length + i}</small></div>`);
+    return h + `</div>`;
   };
-  document.getElementById("pair").innerHTML = row("cue", "cue", "unos chilaquiles verdes") + row("neutro", "neu", "unos huevos revueltos");
+  document.getElementById("pair").innerHTML = row("cue", "cue", "chafa,") + row("neutro", "neu", "de mala calidad,");
 })();
 (function toks(){
   const T = [["…compré",""],["unos","base"],[" chil","kw"],["aqu","kw"],["iles","kw"],[" verdes","tw"],[" para","w1"],[" desay","w2"],["unar","w3"],[".","w4"],[" ¿Me","w5"],[" recom",""],["…?",""]];
