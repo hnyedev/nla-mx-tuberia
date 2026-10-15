@@ -1,0 +1,415 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Tubería NLA-MX</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: cuaderno de laboratorio. Diagrama de la tubería arriba (clic = ficha), fórmulas en rejilla, bitácora al final. Ocre = módulos NLA (como la figura del paper), verde azulado = datos y modelo fuente. */
+:root{
+  --bg:#F3F6F7; --surface:#FFFFFF; --ink:#15212B; --muted:#56666F; --line:#D3DCE0;
+  --ochre:#9A6A0E; --ochre-wash:#F6ECD6; --teal:#1C6871; --teal-wash:#DCEDEE;
+  --ok:#2E7A4D; --run:#2D63C8; --todo:#84919A; --block:#B23A3A;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1519; --surface:#162027; --ink:#E3EAEE; --muted:#93A3AD; --line:#2A3943;
+  --ochre:#E2AA45; --ochre-wash:#352914; --teal:#62C1C9; --teal-wash:#122F33;
+  --ok:#5DC28B; --run:#79A3F6; --todo:#7D8B95; --block:#EC7A7A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1519; --surface:#162027; --ink:#E3EAEE; --muted:#93A3AD; --line:#2A3943;
+  --ochre:#E2AA45; --ochre-wash:#352914; --teal:#62C1C9; --teal-wash:#122F33;
+  --ok:#5DC28B; --run:#79A3F6; --todo:#7D8B95; --block:#EC7A7A; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:82%;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:24px;font-weight:700}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+.eyebrow{font:500 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{max-width:68ch;color:var(--muted)}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+a{color:var(--teal)}
+header{display:grid;gap:14px}
+.summary{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
+.chip b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:600}
+.sync{font:12px var(--f-mono);color:var(--muted)}
+/* status glyphs (html) */
+.g{width:11px;height:11px;border-radius:50%;display:inline-block;flex:none;box-sizing:border-box}
+.g.hecho{background:var(--ok)}
+.g.en_curso{border:2px solid var(--run);background:radial-gradient(circle,var(--run) 0 2px,transparent 2.5px)}
+.g.pendiente{border:2px dashed var(--todo)}
+.g.bloqueado{background:var(--block);border-radius:2px}
+.g.sin{border:1.5px solid var(--line)}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:960px){.stage{grid-template-columns:minmax(0,1fr)}}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+.diagram svg{display:block;min-width:880px;width:100%;height:auto}
+.hint{font-size:12px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line)}
+svg text{font-family:var(--f-body)}
+.n-title{font:600 12.5px var(--f-body);fill:var(--ink)}
+.n-sub{font:10.5px var(--f-mono);fill:var(--muted)}
+.lane{font:500 10px var(--f-mono);letter-spacing:.12em;fill:var(--muted)}
+.edge{fill:none;stroke:var(--muted);stroke-width:1.4}
+.edge.dash{stroke-dasharray:4 4}
+.edge.loop{stroke:var(--ochre);stroke-width:1.6}
+.ah{fill:var(--muted)} .ah.o{fill:var(--ochre)}
+.node{cursor:pointer;outline:none}
+.node .box{stroke-width:1.4}
+.k-data .box{fill:var(--teal-wash);stroke:var(--teal)}
+.k-src .box{fill:var(--surface);stroke:var(--teal)}
+.k-nla .box{fill:var(--ochre-wash);stroke:var(--ochre)}
+.k-txt .box{fill:var(--surface);stroke:var(--ochre);stroke-dasharray:6 4}
+.k-vec .box{fill:var(--surface);stroke:var(--ochre)}
+.k-out .box{fill:var(--surface);stroke:var(--line)}
+.node.st-pendiente .box{stroke-dasharray:5 4}
+.node:hover .box,.node:focus-visible .box{stroke-width:2.6}
+.node.sel .box{stroke-width:3}
+.vecstripe{fill:var(--ochre);opacity:.18}
+.stdot.hecho{fill:var(--ok)} .stdot.en_curso{fill:none;stroke:var(--run);stroke-width:2}
+.stdot.pendiente{fill:none;stroke:var(--todo);stroke-width:2;stroke-dasharray:2 2}
+.stdot.bloqueado{fill:var(--block)} .stdot.sin{fill:none;stroke:var(--line);stroke-width:1.5}
+.stcore{fill:var(--run)}
+.quote{font:italic 11.5px var(--f-body);fill:var(--muted)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+@media (max-width:960px){.panel{position:static}}
+.panel .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:7px;font:500 12px var(--f-mono);padding:3px 9px;border:1px solid var(--line);border-radius:99px}
+.panel dl{margin:0;display:grid;gap:10px}
+.panel dt{font:500 10.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.panel dd{margin:2px 0 0;font-size:14px}
+.panel .math{overflow-x:auto;padding:8px 0}
+.note{font-size:13.5px;border-left:3px solid var(--run);padding-left:10px}
+.warn{font-size:13.5px;border-left:3px solid var(--block);padding-left:10px}
+form.edit{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+form.edit label{font:500 11px var(--f-mono);color:var(--muted)}
+select,textarea,button{font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+textarea{min-height:64px;resize:vertical}
+button{background:var(--ink);color:var(--bg);border-color:var(--ink);cursor:pointer;font-weight:600;justify-self:start}
+button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--run);outline-offset:2px}
+.msg{font-size:12.5px;color:var(--muted)}
+
+math{font-size:1.12em}
+.formulas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.fcard .math{overflow-x:auto;padding:6px 0;border-block:1px dashed var(--line)}
+.fcard p{font-size:14px}
+.fcard .where{font-size:13px;color:var(--muted)}
+.tag{font:500 10px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:4px;justify-self:start}
+.tag.inf{background:var(--teal-wash);color:var(--teal)}
+.tag.ent{background:var(--ochre-wash);color:var(--ochre)}
+.tag.pil{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+
+.limits{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.limits div{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px;font-size:14px;min-width:0}
+.limits b{font-family:var(--f-display);font-stretch:85%;font-size:16px}
+
+.log{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.log li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.log time{font:12.5px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);font-size:14px}
+section{display:grid;gap:16px}
+@media (prefers-reduced-motion:no-preference){.node .box{transition:stroke-width .15s}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">nla-mx · réplica VSS con mexicanismos</span>
+  <h1>Tubería NLA-MX</h1>
+  <p class="lede">Cómo viaja un par contrafactual (brazo con mexicanismo y brazo neutro) desde la DB hasta una cifra de efecto. El modelo fuente produce un vector <i>h</i>; el verbalizador (AV) lo describe en texto; el reconstructor (AR) intenta recuperar el vector solo desde ese texto. Haz clic en cualquier pieza para ver qué hace, en qué archivo vive, su fórmula y su estado.</p>
+  <div class="summary" id="summary" aria-live="polite">
+    <span class="chip"><span class="g hecho"></span>hecho <b id="c-hecho">–</b></span>
+    <span class="chip"><span class="g en_curso"></span>en curso <b id="c-en_curso">–</b></span>
+    <span class="chip"><span class="g pendiente"></span>pendiente <b id="c-pendiente">–</b></span>
+    <span class="chip"><span class="g bloqueado"></span>bloqueado <b id="c-bloqueado">–</b></span>
+    <span class="sync" id="sync">estado: cargando…</span>
+  </div>
+</header>
+
+<div class="stage">
+  <div class="diagram">
+    <svg id="svg" viewBox="0 0 1160 490" role="img" aria-label="Diagrama de la tubería NLA-MX"></svg>
+    <div class="hint">Borde punteado = pendiente. Los estados se guardan aparte de la página y se actualizan en vivo.</div>
+  </div>
+  <aside class="panel" id="panel" aria-live="polite"></aside>
+</div>
+
+<section>
+  <div><span class="eyebrow">notación</span><h2>Fórmulas, en corto</h2></div>
+  <div class="formulas" id="formulas"></div>
+</section>
+
+<section>
+  <div><span class="eyebrow">qué no prueba</span><h2>Límites del instrumento</h2></div>
+  <div class="limits">
+    <div><b>Confabulación</b>El AV puede inventar detalles específicos. Los temas suelen ser fieles; los nombres, cifras o lugares concretos no. Lo que se repite entre muestras y tokens vecinos es más confiable.</div>
+    <div><b>Sobreexpresividad</b>El AV es un modelo de lenguaje completo y puede añadir inferencias que el vector no contiene. Un “México” en la explicación no prueba que el vector codifique México.</div>
+    <div><b>Opacidad</b>No sabemos qué parte del vector originó cada afirmación. Por eso el diseño compara brazos (D) en lugar de leer explicaciones aisladas.</div>
+    <div><b>Una capa, un modelo</b>L18 en 1.5B y L20 en 7B. Un 0/5 en el 1.5B es un límite del instrumento, no evidencia sobre sesgo.</div>
+    <div><b>Idioma de salida</b>El AV del 1.5B describe en inglés aunque el prompt sea en español mexicano; los detectores deben cubrir ambos idiomas.</div>
+    <div><b>Escala silenciosa</b>El sidecar del 1.5B trae <code>mse_scale: 1.0</code>; el del 7B, √3584. Si se mezcla, el score sale mal sin lanzar error.</div>
+  </div>
+</section>
+
+<section>
+  <div><span class="eyebrow">avance</span><h2>Bitácora</h2></div>
+  <ul class="log" id="log"><li><span></span><span class="empty">Cargando bitácora…</span></li></ul>
+</section>
+</div>
+
+<script>
+const ST = {hecho:"hecho", en_curso:"en curso", pendiente:"pendiente", bloqueado:"bloqueado", sin:"sin estado"};
+
+/* ---------- MathML ---------- */
+const M = s => `<math display="block">${s}</math>`;
+const F = {
+  h: {tag:"inf", t:"Activación", m:M(`<msub><mi>h</mi><mi>ℓ</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>∈</mo><msup><mi>ℝ</mi><mi>d</mi></msup>`),
+      p:"El vector del flujo residual del modelo fuente en la capa ℓ y la posición (token) t.",
+      w:"d = 1536 en Qwen2.5-1.5B (ℓ = 18); d = 3584 en Qwen2.5-7B (ℓ = 20)."},
+  iny:{tag:"inf", t:"Normalización e inyección", m:M(`<mover><mi>v</mi><mo>~</mo></mover><mo>=</mo><mi>α</mi><mo>·</mo><mfrac><mi>h</mi><mrow><mo>‖</mo><mi>h</mi><mo>‖</mo></mrow></mfrac>`),
+      p:"Se reescala el vector a una norma fija α y se escribe en lugar del embedding de un token marcador dentro del prompt del AV.",
+      w:"α = injection_scale del checkpoint. Código: normalize_activation, inject_at_marked_positions."},
+  verb:{tag:"inf", t:"Verbalización", m:M(`<msup><mi>z</mi><mrow><mo>(</mo><mi>k</mi><mo>)</mo></mrow></msup><mo>∼</mo><msub><mi>p</mi><mtext>AV</mtext></msub><mo>(</mo><mi>z</mi><mo>∣</mo><mover><mi>v</mi><mo>~</mo></mover><mo>;</mo><mi>T</mi><mo>)</mo><mo>,</mo><mspace width="0.5em"/><mi>k</mi><mo>=</mo><mn>1</mn><mo>…</mo><mi>K</mi>`),
+      p:"El AV genera K explicaciones en texto para el mismo vector, muestreando con temperatura T.",
+      w:"Piloto v3: K = 5, T = 1.0, sin semilla."},
+  rec:{tag:"inf", t:"Reconstrucción", m:M(`<mover><mi>h</mi><mo>^</mo></mover><mo>=</mo><mi>W</mi><mo>·</mo><msub><mi>g</mi><mtext>AR</mtext></msub><mo>(</mo><mi>z</mi><mo>)</mo>`),
+      p:"El AR lee solo el texto z con un LM truncado (g) y una cabeza lineal (W) predice el vector original.",
+      w:"Si el texto no contiene la información, ĥ no puede parecerse a h."},
+  mse:{tag:"inf", t:"Puntuación de fidelidad", m:M(`<msub><mtext>MSE</mtext><mtext>dir</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><msup><mrow><mo>‖</mo><mi>s</mi><mfrac><mover><mi>h</mi><mo>^</mo></mover><mrow><mo>‖</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow></mfrac><mo>−</mo><mi>s</mi><mfrac><mi>h</mi><mrow><mo>‖</mo><mi>h</mi><mo>‖</mo></mrow></mfrac><mo>‖</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>2</mn><mo>(</mo><mn>1</mn><mo>−</mo><mi>cos</mi><mo>(</mo><mi>h</mi><mo>,</mo><mover><mi>h</mi><mo>^</mo></mover><mo>)</mo><mo>)</mo>`),
+      p:"Compara solo la dirección. Rango [0, 4]: ≈0.2 bueno, ≈1 mediocre, 2 ortogonal (el texto no dice nada del vector).",
+      w:"La igualdad vale con s = √d. Con mse_scale = 1.0 (sidecar del 1.5B) el valor se divide entre d."},
+  fve:{tag:"ent", t:"Varianza explicada (paper)", m:M(`<mtext>FVE</mtext><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup></mrow><mrow><mo>∑</mo><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>¯</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup></mrow></mfrac>`),
+      p:"Qué fracción de la variación de los vectores recupera el AR comparado con adivinar siempre el promedio h̄.",
+      w:"Anthropic reporta 0.3–0.4 tras el arranque supervisado y 0.6–0.8 tras la RL conjunta."},
+  ent:{tag:"ent", t:"Objetivo de entrenamiento (paper)", m:M(`<munder><mi>max</mi><mtext>AV</mtext></munder><mspace width="0.3em"/><mi>𝔼</mi><mo>[</mo><mo>−</mo><mi>log</mi><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup><mo>]</mo><mo>−</mo><mi>β</mi><mspace width="0.2em"/><mtext>KL</mtext><mo>(</mo><msub><mi>π</mi><mtext>AV</mtext></msub><mo>‖</mo><msub><mi>π</mi><mn>0</mn></msub><mo>)</mo>`),
+      p:"El AV se premia (GRPO) cuando su texto permite reconstruir el vector; el castigo KL lo mantiene cerca del modelo inicial para que siga escribiendo en lenguaje legible. El AR se ajusta por regresión.",
+      w:"Nosotros no entrenamos: usamos checkpoints ya entrenados."},
+  tasa:{tag:"pil", t:"Tasa de detección", m:M(`<msub><mi>s</mi><mi>t</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>K</mi></mfrac><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><mn>𝟙</mn><mo>[</mo><mtext>detector</mtext><mo>(</mo><msubsup><mi>z</mi><mi>t</mi><mrow><mo>(</mo><mi>k</mi><mo>)</mo></mrow></msubsup><mo>)</mo><mo>]</mo>`),
+      p:"De las K explicaciones de la posición t, qué fracción menciona el concepto buscado (identidad, clase, estereotipo).",
+      w:"Hay detector estricto y amplio; de ahí D_estricto y D_amplio."},
+  delta:{tag:"pil", t:"Efecto dentro de un brazo", m:M(`<mi>Δ</mi><mo>=</mo><munder><mi>max</mi><mrow><mi>t</mi><mo>∈</mo><mi>W</mi></mrow></munder><msub><mi>s</mi><mi>t</mi></msub><mo>−</mo><msub><mi>s</mi><mtext>base</mtext></msub><mo>,</mo><mspace width="0.5em"/><mi>W</mi><mo>=</mo><mo>[</mo><msub><mi>t</mi><mi>w</mi></msub><mo>,</mo><msub><mi>t</mi><mi>w</mi></msub><mo>+</mo><mn>5</mn><mo>]</mo>`),
+      p:"Cuánto sube la detección en la ventana tras la palabra clave respecto a la línea base (el token anterior al tramo).",
+      w:"tw = último token que se traslapa con el keyword. Línea base fuera del tramo ⇒ s_base = 0."},
+  D:{tag:"pil", t:"Efecto contrafactual", m:M(`<mi>D</mi><mo>=</mo><msub><mi>Δ</mi><mtext>cue</mtext></msub><mo>−</mo><msub><mi>Δ</mi><mtext>neutro</mtext></msub>`),
+      p:"La métrica principal: cuánto más detecta el AV con el mexicanismo que con su equivalente neutro, en el mismo par.",
+      w:"D > 0 sugiere que el mexicanismo activa una inferencia identitaria que el neutro no activa."},
+  comp:{tag:"inf", t:"Dirección de diferencia", m:M(`<mi>δ</mi><mo>=</mo><msub><mi>h</mi><mi>a</mi></msub><mo>−</mo><msub><mi>h</mi><mi>b</mi></msub><mspace width="0.5em"/><mo>⟶</mo><mspace width="0.5em"/><mtext>AV</mtext><mo>(</mo><mi>δ</mi><mo>)</mo>`),
+      p:"El endpoint /compare describe la resta de los dos brazos: qué cambió en el vector al cambiar solo la palabra.",
+      w:"Útil como análisis secundario del par contrafactual."}
+};
+
+/* ---------- Nodos ---------- */
+const N = [
+  {id:"db",x:20,y:30,w:200,h:64,k:"data",t:"DB de pares mínimos",s:"estructura_mexicanismos.json",
+   q:"Pares contrafactuales: un brazo con el mexicanismo (cue) y otro con su equivalente neutro. La DB no vive en el repo; se lee en solo lectura y se verifica su sha256 al inicio y al final.",
+   a:"data/ (fuera de git) · scripts/cargador_db.py · scripts/db_verificada.py",f:[],l:"Integrar entregas como versión nueva en data/entregas/AAAA-MM-DD/, nunca editar en sitio."},
+  {id:"val",x:260,y:30,w:200,h:64,k:"data",t:"Validador (regla D2)",s:"validar_pares.py · v2",
+   q:"Aplica las reglas duras de la spec rev. 4. Un par con cualquier falla dura se descarta; no se corrige ni se reintenta. En entregas con estado solo entran las “aprobado”.",
+   a:"scripts/validar_pares.py",f:[],l:"Los controles positivo y nulo se identifican por rol; el piloto todavía no los separa en su resumen (P34)."},
+  {id:"tpl",x:500,y:30,w:200,h:64,k:"data",t:"Plantilla y posiciones",s:"messages · tw, ventana, base",
+   q:"Cada brazo se formatea como mensajes de chat. Se eligen las posiciones a describir: tw, la ventana tw..tw+5, la línea base, G1 (último token del usuario) y G3 (token ajeno de control).",
+   a:"scripts/piloto_m1_v3.py · services/nla/chat_template_spans.py",f:["delta"],l:"Criterio v2-2026-10-02 fijado de antemano; no se ajusta después de ver resultados."},
+  {id:"ckpt",x:760,y:30,w:200,h:64,k:"nla",t:"Checkpoints AV / AR",s:"andyx10 1.5B · kitft 7B",
+   q:"Pesos ya entrenados del verbalizador y del reconstructor. Ambos son copias afinadas del modelo fuente: arranque supervisado y luego RL conjunta.",
+   a:"services/nla/.env (NLA_VERBALIZER_MODEL, NLA_RECONSTRUCTOR_MODEL) · nla_meta.yaml",f:["ent","fve"],l:"Entrenados en inglés por terceros: su FVE sobre español mexicano no está medido."},
+  {id:"src15",x:20,y:175,w:170,h:60,k:"src",t:"Qwen2.5-1.5B · L18",s:"modelo fuente",
+   q:"Corre el prompt y lee el flujo residual en la capa 18. Se trunca después de la capa de extracción para ahorrar memoria. Verificado en CPU: arranque 11.4 s, /explain 3.7 s, 7.39 GiB de RAM.",
+   a:"services/nla/server.py (/extract, /explain)",f:["h"],l:"Modelo de desarrollo (M0, M1). Sirve para probar el instrumento, no para la conclusión."},
+  {id:"src7",x:20,y:245,w:170,h:44,k:"src",t:"Qwen2.5-7B · L20",s:"modelo principal",
+   q:"Modelo principal desde M3, el mismo del estudio colombiano. Checkpoints kitft/nla-qwen2.5-7b-L20-av y -ar; d = 3584; mse_scale = √3584 ≈ 59.87. En bf16 pide unos 15 + 11 + 15 GB de GPU.",
+   a:"services/nla/.env · CLAUDE.md del repo",f:["h"],l:"Identificado, no probado. Los valores por defecto de server.py son redirecciones 307: fija los nombres L20 en el .env."},
+  {id:"hl",x:225,y:160,w:36,h:120,k:"vec",t:"h",s:"",
+   q:"Un vector de d números: lo que el modelo “tiene en mente” en ese token antes de responder. Es lo único que el AV ve.",
+   a:"services/nla/nla_inference.py",f:["h","iny"],l:"Su norma l2 varía entre CPUs; se compara solo en dirección."},
+  {id:"av",x:300,y:160,w:180,h:120,k:"nla",shape:"av",t:"Verbalizador (AV)",s:"vector → texto",
+   q:"Copia afinada del modelo fuente. El vector normalizado entra como el embedding de un token marcador y el AV escribe una explicación. Para en </explanation>.",
+   a:"nla_inference.py · vllm_verbalizer.py (GPU) · eager_verbalizer.py (CPU)",f:["iny","verb"],l:"Puede confabular y añadir inferencias. El del 1.5B responde en inglés."},
+  {id:"txt",x:515,y:175,w:260,h:90,k:"txt",t:"Descripción en lenguaje natural",s:"",
+   q:"El cuello de botella del autoencoder: si la información no está en el texto, el AR no puede reconstruir el vector. Es lo que leen los detectores.",
+   a:"respuesta de /explain (campo description)",f:["verb"],l:"El 1.5B no emite la etiqueta de apertura <explanation>; el aviso del log es inofensivo."},
+  {id:"ar",x:810,y:160,w:180,h:120,k:"nla",shape:"ar",t:"Reconstructor (AR)",s:"texto → vector",
+   q:"LM truncado más una cabeza lineal: lee solo el texto y predice el vector original.",
+   a:"nla_inference.py · clase NLAReconstructor",f:["rec"],l:"Mide si el texto alcanza para reconstruir, no si cada afirmación es verdadera."},
+  {id:"hhat",x:1025,y:160,w:36,h:120,k:"vec",t:"ĥ",s:"",
+   q:"El vector reconstruido. Se compara con h por coseno.",
+   a:"/score, /describe",f:["rec","mse"],l:""},
+  {id:"score",x:545,y:300,w:200,h:42,k:"nla",pill:true,t:"Puntuación",s:"MSE = 2(1 − cos)",
+   q:"Cierra el lazo: qué tan bien la explicación capturó el vector. Así se marca cuánto confiar en cada descripción.",
+   a:"services/nla/server.py (/score) · NLAReconstructor.score",f:["mse"],l:"Con el 1.5B el sidecar declara mse_scale = 1.0. Verifícalo al cargar cada fuente."},
+  {id:"rem",x:20,y:400,w:160,h:64,k:"out",t:"Remuestreo",s:"K = 5 · T = 1.0",
+   q:"Cada posición se describe K veces. Lo que se repite entre muestras y entre tokens vecinos es más confiable que una sola explicación.",
+   a:"scripts/piloto_m1_v3.py",f:["verb","tasa"],l:"El umbral de estabilidad se fija antes de ver resultados y no se mueve."},
+  {id:"det",x:212,y:400,w:160,h:64,k:"out",t:"Detectores",s:"estricto · amplio",
+   q:"Marcan si cada explicación menciona el concepto buscado, con dos listas de claves (estricta y amplia).",
+   a:"scripts/piloto_m1_v2.py (KEYWORDS) · piloto_m1_v3.py",f:["tasa"],l:"Deben cubrir inglés y español mientras el AV responda en inglés."},
+  {id:"efe",x:404,y:400,w:160,h:64,k:"out",t:"Efecto Δ y D",s:"cue − neutro",
+   q:"Δ por brazo y D entre brazos. D_estricto es la métrica principal y D_amplio la secundaria. En tw corren las secundarias: vector aleatorio, otras posiciones G1 y G3, ablación.",
+   a:"scripts/piloto_m1_v3.py",f:["delta","D","comp"],l:"Un 0/5 en el 1.5B es un límite del instrumento, no evidencia sobre sesgo."},
+  {id:"res",x:596,y:400,w:160,h:64,k:"out",t:"Resultados",s:"resultados.json · jsonl",
+   q:"experimentos/m1/v3/<corrida>/: resultados.json al cerrar cada par y progreso.jsonl en vivo. Guardan la huella sha256 de la DB al inicio y al final.",
+   a:"experimentos/m1/v3/ (no se versiona)",f:[],l:"Si la huella cambia durante la corrida, se marca huella_cambiada y sale con 1."},
+  {id:"web",x:788,y:400,w:160,h:64,k:"out",t:"Webapp nla-mx",s:"Next.js · /nla-mx",
+   q:"Fork recortado de Neuronpedia (solo la pestaña NLA) más la vista /nla-mx con las corridas del piloto en vivo.",
+   a:"apps/webapp/app/nla-mx · apps/webapp/lib/nla-mx",f:[],l:"Compila, pero no se ha levantado con Postgres ni ComputeHost; a .env.example le faltan la URL del servicio y NLA_SERVER_SECRET."},
+  {id:"tes",x:980,y:400,w:160,h:64,k:"out",t:"Tesina",s:"Claude Doc",
+   q:"Bitácora, estado de la aportación y cifras. Cada avance que cambie datos, spec, lotes o resultados se registra ahí.",
+   a:"claude.ai/code/artifact/1d60cdaf-…",f:[],l:""}
+];
+
+/* ---------- SVG ---------- */
+const svg = document.getElementById("svg"), NS = "http://www.w3.org/2000/svg";
+const el = (n, a = {}, txt) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
+const defs = el("defs");
+for (const [id, cls] of [["arr", "ah"], ["arro", "ah o"]]) {
+  const m = el("marker", {id, viewBox:"0 0 10 10", refX:"9", refY:"5", markerWidth:"7", markerHeight:"7", orient:"auto-start-reverse"});
+  m.appendChild(el("path", {d:"M0,0 L10,5 L0,10 z", class:cls})); defs.appendChild(m);
+}
+svg.appendChild(defs);
+const edge = (d, cls = "", mk = "arr") => svg.appendChild(el("path", {d, class:"edge " + cls, "marker-end":`url(#${mk})`}));
+
+svg.appendChild(el("text", {x:20, y:18, class:"lane"}, "1 · DATOS Y POSICIONES"));
+svg.appendChild(el("text", {x:20, y:152, class:"lane"}, "2 · AUTOENCODER"));
+svg.appendChild(el("text", {x:20, y:388, class:"lane"}, "3 · MEDICIÓN Y SALIDA"));
+
+edge("M220,62 H258"); edge("M460,62 H498");
+edge("M600,94 V125 H105 V173");
+edge("M820,94 V140 H390 V170", "dash"); edge("M900,94 V170", "dash");
+edge("M190,205 H223"); edge("M261,220 H302"); edge("M480,220 H513"); edge("M775,220 H812"); edge("M990,220 H1023");
+edge("M1043,280 V321 H747", "loop", "arro");
+edge("M545,321 H243 V284", "loop", "arro");
+edge("M645,342 V372 H100 V398");
+for (const x of [180, 372, 564, 756, 948]) edge(`M${x},432 H${x + 30}`);
+
+const nodeEls = {};
+for (const n of N) {
+  const g = el("g", {class:`node k-${n.k}`, tabindex:"0", role:"button", "aria-label":n.t, "data-id":n.id});
+  let box, cx = n.x + n.w / 2;
+  if (n.shape === "av") box = el("polygon", {class:"box", points:`${n.x},${n.y} ${n.x + n.w},${n.y + 30} ${n.x + n.w},${n.y + n.h - 30} ${n.x},${n.y + n.h}`});
+  else if (n.shape === "ar") box = el("polygon", {class:"box", points:`${n.x},${n.y + 30} ${n.x + n.w},${n.y} ${n.x + n.w},${n.y + n.h} ${n.x},${n.y + n.h - 30}`});
+  else box = el("rect", {class:"box", x:n.x, y:n.y, width:n.w, height:n.h, rx:n.pill ? n.h / 2 : (n.k === "txt" ? 14 : 6)});
+  g.appendChild(box);
+  if (n.k === "vec") {
+    for (let i = 0; i < 10; i++) g.appendChild(el("rect", {class:"vecstripe", x:n.x + 4, y:n.y + 6 + i * 11, width:n.w - 8, height:7, opacity:(0.08 + ((i * 37) % 10) / 22).toFixed(2)}));
+    const lab = el("text", {x:cx, y:n.y - 8, "text-anchor":"middle", class:"n-title"});
+    lab.textContent = n.id === "hl" ? "hₗ" : "ĥₗ"; g.appendChild(lab);
+  } else if (n.k === "txt") {
+    g.appendChild(el("text", {x:cx, y:n.y - 8, "text-anchor":"middle", class:"n-title"}, n.t));
+    const q1 = el("text", {x:cx, y:n.y + 36, "text-anchor":"middle", class:"quote"}, "“Mexican colloquial register; speaker");
+    const q2 = el("text", {x:cx, y:n.y + 54, "text-anchor":"middle", class:"quote"}, "framed as working-class, from Mexico City…”");
+    g.append(q1, q2);
+    g.appendChild(el("text", {x:cx, y:n.y + 76, "text-anchor":"middle", class:"n-sub"}, "ejemplo ilustrativo, no es salida real"));
+  } else {
+    const ty = n.pill ? n.y + 18 : (n.shape ? n.y + n.h / 2 - 2 : n.y + (n.h > 50 ? 27 : 19));
+    g.appendChild(el("text", {x:cx, y:ty, "text-anchor":"middle", class:"n-title"}, n.t));
+    if (n.s) g.appendChild(el("text", {x:cx, y:ty + 16, "text-anchor":"middle", class:"n-sub"}, n.s));
+  }
+  const dx = n.shape ? n.x + n.w - 14 : n.x + n.w - 10, dy = n.shape === "ar" ? n.y + 12 : (n.shape === "av" ? n.y + 42 : n.y + 10);
+  const dot = el("circle", {cx:dx, cy:dy, r:5, class:"stdot sin"}); g.appendChild(dot);
+  const core = el("circle", {cx:dx, cy:dy, r:1.8, class:"stcore", visibility:"hidden"}); g.appendChild(core);
+  g.addEventListener("click", () => select(n.id));
+  g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(n.id); } });
+  svg.appendChild(g); nodeEls[n.id] = {g, dot, core};
+}
+
+/* ---------- Fórmulas ---------- */
+const tagName = {inf:"inferencia", ent:"entrenamiento", pil:"piloto"};
+document.getElementById("formulas").innerHTML = Object.values(F).map(f =>
+  `<article class="fcard"><span class="tag ${f.tag}">${tagName[f.tag]}</span><h3>${f.t}</h3><div class="math">${f.m}</div><p>${f.p}</p><p class="where">${f.w}</p></article>`).join("");
+
+/* ---------- Estado ---------- */
+/* Copia congelada para vistas sin base (por ejemplo, GitHub Pages). */
+const SNAPSHOT = {fecha:"2026-10-15", etapas:{
+  db:{estado:"en_curso",nota:"Hoja de etiquetado en llenado manual."},
+  val:{estado:"hecho",nota:"Criterio validador-v2-2026-10-11 (spec rev. 4)."},
+  tpl:{estado:"hecho",nota:"Criterio v2-2026-10-02 con la ventana posicional de VSS."},
+  ckpt:{estado:"hecho",nota:"1.5B L18 en uso; 7B L20 identificado."},
+  src15:{estado:"hecho",nota:"Verificado en CPU en clon limpio."},
+  src7:{estado:"pendiente",nota:"Identificado, no probado. Necesita GPU de 48 u 80 GB."},
+  hl:{estado:"hecho"}, txt:{estado:"hecho"}, ar:{estado:"hecho"}, hhat:{estado:"hecho"}, res:{estado:"hecho"},
+  av:{estado:"en_curso",nota:"Funciona en 1.5B, pero describe en inglés."},
+  score:{estado:"en_curso",nota:"El mse del 1.5B sale dividido entre d; usar mse_dir = 2(1 − cos)."},
+  rem:{estado:"en_curso",nota:"K = 5 y T = 1.0."},
+  det:{estado:"hecho",nota:"Detectores estricto y amplio; léxico bilingüe congelado para el 7B."},
+  efe:{estado:"en_curso",nota:"Faltan el 7B y al menos 10 a 20 pares experimentales."},
+  web:{estado:"en_curso",nota:"Compila; no se ha levantado con Postgres."},
+  tes:{estado:"en_curso"}},
+  bitacora:[
+  {fecha:"2026-10-11",texto:"Primera corrida del piloto v3 con pares reales en el 1.5B. El AV describe en inglés."},
+  {fecha:"2026-10-14",texto:"Guía de replicación reverificada en clon limpio."},
+  {fecha:"2026-10-15",texto:"Mapa de la tubería publicado y análisis de robustez del instrumento."}]};
+let status = {}, selected = "av", db = null, canWrite = false;
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function paintNodes() {
+  const counts = {hecho:0, en_curso:0, pendiente:0, bloqueado:0};
+  for (const n of N) {
+    const s = status[n.id]?.estado in ST ? status[n.id].estado : "sin";
+    if (s in counts) counts[s]++;
+    const {g, dot, core} = nodeEls[n.id];
+    dot.setAttribute("class", "stdot " + s);
+    core.setAttribute("visibility", s === "en_curso" ? "visible" : "hidden");
+    g.classList.remove("st-hecho", "st-en_curso", "st-pendiente", "st-bloqueado", "st-sin");
+    g.classList.add("st-" + s);
+    g.classList.toggle("sel", n.id === selected);
+    g.setAttribute("aria-label", `${n.t}: ${ST[s]}`);
+  }
+  for (const k in counts) document.getElementById("c-" + k).textContent = counts[k];
+}
+function select(id) { selected = id; try { localStorage.setItem("nla-sel", id); } catch (e) {} paintNodes(); renderPanel(); }
+function renderPanel() {
+  const n = N.find(x => x.id === selected), st = status[n.id] || {}, s = st.estado in ST ? st.estado : "sin";
+  const title = n.k === "vec" ? (n.id === "hl" ? "Activación hₗ" : "Reconstrucción ĥₗ") : n.t;
+  let html = `<span class="eyebrow">ficha</span><h2>${esc(title)}</h2>
+    <div class="row"><span class="pill"><span class="g ${s}"></span>${ST[s]}</span>${st.fecha ? `<span class="sync">act. ${esc(st.fecha)}</span>` : ""}</div>
+    ${st.nota ? `<p class="note">${esc(st.nota)}</p>` : ""}
+    <dl><div><dt>qué hace</dt><dd>${esc(n.q)}</dd></div>
+    <div><dt>dónde vive</dt><dd class="mono">${esc(n.a)}</dd></div></dl>`;
+  for (const k of n.f) html += `<div><span class="eyebrow">${esc(F[k].t)}</span><div class="math">${F[k].m}</div></div>`;
+  if (n.l) html += `<p class="warn">${esc(n.l)}</p>`;
+  if (n.id === "tes") html += `<a href="https://claude.ai/code/artifact/1d60cdaf-a6c9-4713-96cc-7ca91f981bd5">Abrir la tesina</a>`;
+  if (canWrite) html += `<form class="edit" id="ed"><label for="ed-st">Actualizar estado</label>
+      <select id="ed-st">${["hecho","en_curso","pendiente","bloqueado"].map(k => `<option value="${k}"${k === s ? " selected" : ""}>${ST[k]}</option>`).join("")}</select>
+      <label for="ed-nota">Nota</label><textarea id="ed-nota">${esc(st.nota)}</textarea>
+      <button type="submit">Guardar estado</button><span class="msg" id="ed-msg"></span></form>`;
+  const p = document.getElementById("panel"); p.innerHTML = html;
+  const f = document.getElementById("ed");
+  if (f) f.addEventListener("submit", async e => {
+    e.preventDefault(); const msg = document.getElementById("ed-msg");
+    const body = {estado:document.getElementById("ed-st").value, nota:document.getElementById("ed-nota").value.trim(), fecha:new Date().toISOString().slice(0, 10)};
+    msg.textContent = "Guardando…";
+    try { await db.doc("etapas/" + n.id).set(body); msg.textContent = "Guardado."; }
+    catch (err) { msg.textContent = err?.code === "invalid_argument" ? "No tienes permiso para editar el estado." : "No se pudo guardar. Intenta de nuevo."; }
+  });
+}
+function renderLog(entries) {
+  const ul = document.getElementById("log");
+  if (!entries.length) { ul.innerHTML = `<li><span></span><span class="empty">Sin entradas todavía. Claude agrega una por cada avance.</span></li>`; return; }
+  ul.innerHTML = entries.slice().sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)))
+    .map(e => `<li><time>${esc(e.fecha)}</time><span>${esc(e.texto)}</span></li>`).join("");
+}
+
+try { const s = localStorage.getItem("nla-sel"); if (s && N.some(n => n.id === s)) selected = s; } catch (e) {}
+paintNodes(); renderPanel();
+
+(async () => {
+  const sync = document.getElementById("sync");
+  db = await window.claude?.use?.("db") ?? null;
+  if (!db) {
+    status = SNAPSHOT.etapas; sync.textContent = "estado congelado al " + SNAPSHOT.fecha;
+    paintNodes(); renderPanel(); renderLog(SNAPSHOT.bitacora); return;
+  }
+  try { const user = await claude.use("user"); canWrite = !!(user && user.canEdit()); } catch (e) {}
+  db.collection("etapas").onSnapshot(snap => {
+    status = {}; for (const d of snap.docs) status[d.id] = d.data();
+    sync.textContent = snap.empty ? "sin estados guardados aún" : "estado en vivo";
+    paintNodes(); renderPanel();
+  }, () => { sync.textContent = "estado sin conexión"; });
+  db.doc("avance/bitacora").onSnapshot(d => renderLog(d.exists ? (d.data().entradas || []) : []), () => renderLog([]));
+})();
+</script>
+
+</body></html>
