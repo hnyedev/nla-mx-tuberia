@@ -2,42 +2,56 @@
 <title>Tubería NLA-MX</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: cuaderno de laboratorio. Diagrama de la tubería arriba (clic = ficha), fórmulas en rejilla, bitácora al final. Ocre = módulos NLA (como la figura del paper), verde azulado = datos y modelo fuente. */
+/* Layout: infografía vertical. Bandas numeradas (1–7, el orden real de la tubería): a la izquierda número, título, texto y viñetas; a la derecha una tarjeta con el diagrama. Azul = dato o vector, violeta = módulos NLA, verde = brazo neutro. */
 :root{
-  --bg:#F3F6F7; --surface:#FFFFFF; --ink:#15212B; --muted:#56666F; --line:#D3DCE0;
-  --ochre:#9A6A0E; --ochre-wash:#F6ECD6; --teal:#1C6871; --teal-wash:#DCEDEE;
-  --ok:#2E7A4D; --run:#2D63C8; --todo:#84919A; --block:#B23A3A;
-  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --bg:#FFFFFF; --panel:#F4F7FD; --card:#FFFFFF; --ink:#16213F; --muted:#56607A; --line:#D6DEEE;
+  --navy:#1A2C6E; --blue:#2B59D9; --blue-wash:#E3EBFC; --violet:#6A4BD6; --violet-wash:#EDE8FC;
+  --green:#22895A; --green-wash:#E1F3EA; --amber:#B7700A;
+  --ok:#22895A; --run:#2B59D9; --todo:#8790A6; --block:#C2393F;
+  --f-display:"Lexend","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0E1519; --surface:#162027; --ink:#E3EAEE; --muted:#93A3AD; --line:#2A3943;
-  --ochre:#E2AA45; --ochre-wash:#352914; --teal:#62C1C9; --teal-wash:#122F33;
-  --ok:#5DC28B; --run:#79A3F6; --todo:#7D8B95; --block:#EC7A7A; color-scheme:dark}}
+  --bg:#0B1124; --panel:#111A33; --card:#141F3C; --ink:#E5EBFA; --muted:#9AA6C4; --line:#26345C;
+  --navy:#A9BEFF; --blue:#7397FF; --blue-wash:#1B2A55; --violet:#A994FF; --violet-wash:#2A2156;
+  --green:#5CCB95; --green-wash:#143A2C; --amber:#F0B44C;
+  --ok:#5CCB95; --run:#7397FF; --todo:#7F8AA8; --block:#F07A7F; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0E1519; --surface:#162027; --ink:#E3EAEE; --muted:#93A3AD; --line:#2A3943;
-  --ochre:#E2AA45; --ochre-wash:#352914; --teal:#62C1C9; --teal-wash:#122F33;
-  --ok:#5DC28B; --run:#79A3F6; --todo:#7D8B95; --block:#EC7A7A; color-scheme:dark}
-body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body)}
-.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:40px}
-h1,h2,h3{font-family:var(--f-display);font-stretch:82%;text-wrap:balance;margin:0;line-height:1.15}
-h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.01em}
-h2{font-size:24px;font-weight:700}
+  --bg:#0B1124; --panel:#111A33; --card:#141F3C; --ink:#E5EBFA; --muted:#9AA6C4; --line:#26345C;
+  --navy:#A9BEFF; --blue:#7397FF; --blue-wash:#1B2A55; --violet:#A994FF; --violet-wash:#2A2156;
+  --green:#5CCB95; --green-wash:#143A2C; --amber:#F0B44C;
+  --ok:#5CCB95; --run:#7397FF; --todo:#7F8AA8; --block:#F07A7F; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:32px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);color:var(--navy);margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:clamp(38px,7vw,68px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(22px,2.6vw,27px);font-weight:700}
 h3{font-size:16px;font-weight:700}
 p{margin:0}
-.eyebrow{font:500 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.lede{max-width:68ch;color:var(--muted)}
-code,.mono{font-family:var(--f-mono);font-size:.88em}
-a{color:var(--teal)}
-header{display:grid;gap:14px}
-.summary{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:13px}
-.chip{display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
-.chip b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:600}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+a{color:var(--blue)}
+.muted{color:var(--muted)}
+.eyebrow{font:600 11.5px/1 var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+.top{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+@media (max-width:820px){.top{grid-template-columns:minmax(0,1fr)}}
+.top .sub{font:600 clamp(17px,2.2vw,21px)/1.3 var(--f-display);color:var(--ink);margin-top:10px}
+.top .lede{max-width:64ch;color:var(--muted);margin-top:12px}
+.legend{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;font-size:14px;background:var(--card)}
+.legend div{display:flex;align-items:center;gap:10px}
+.sw{width:18px;height:14px;border-radius:3px;border:1.5px solid var(--blue);background:var(--blue-wash);flex:none}
+.sw.v{border-color:var(--violet);background:var(--violet-wash)} .sw.g{border-color:var(--green);background:var(--green-wash)}
+.arrowkey{font:700 16px var(--f-mono);color:var(--muted);width:18px;text-align:center}
+.summary{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;align-items:center;margin-top:16px}
+.chipc{display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
+.chipc b{color:var(--ink);font-variant-numeric:tabular-nums}
 .sync{font:12px var(--f-mono);color:var(--muted)}
-/* status glyphs (html) */
+
+/* status glyphs */
 .g{width:11px;height:11px;border-radius:50%;display:inline-block;flex:none;box-sizing:border-box}
 .g.hecho{background:var(--ok)}
 .g.en_curso{border:2px solid var(--run);background:radial-gradient(circle,var(--run) 0 2px,transparent 2.5px)}
@@ -45,284 +59,544 @@ header{display:grid;gap:14px}
 .g.bloqueado{background:var(--block);border-radius:2px}
 .g.sin{border:1.5px solid var(--line)}
 
-.stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
-@media (max-width:960px){.stage{grid-template-columns:minmax(0,1fr)}}
-.diagram{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow-x:auto}
-.diagram svg{display:block;min-width:880px;width:100%;height:auto}
-.hint{font-size:12px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line)}
-svg text{font-family:var(--f-body)}
-.n-title{font:600 12.5px var(--f-body);fill:var(--ink)}
-.n-sub{font:10.5px var(--f-mono);fill:var(--muted)}
-.lane{font:500 10px var(--f-mono);letter-spacing:.12em;fill:var(--muted)}
-.edge{fill:none;stroke:var(--muted);stroke-width:1.4}
-.edge.dash{stroke-dasharray:4 4}
-.edge.loop{stroke:var(--ochre);stroke-width:1.6}
-.ah{fill:var(--muted)} .ah.o{fill:var(--ochre)}
-.node{cursor:pointer;outline:none}
-.node .box{stroke-width:1.4}
-.k-data .box{fill:var(--teal-wash);stroke:var(--teal)}
-.k-src .box{fill:var(--surface);stroke:var(--teal)}
-.k-nla .box{fill:var(--ochre-wash);stroke:var(--ochre)}
-.k-txt .box{fill:var(--surface);stroke:var(--ochre);stroke-dasharray:6 4}
-.k-vec .box{fill:var(--surface);stroke:var(--ochre)}
-.k-out .box{fill:var(--surface);stroke:var(--line)}
-.node.st-pendiente .box{stroke-dasharray:5 4}
-.node:hover .box,.node:focus-visible .box{stroke-width:2.6}
-.node.sel .box{stroke-width:3}
-.vecstripe{fill:var(--ochre);opacity:.18}
-.stdot.hecho{fill:var(--ok)} .stdot.en_curso{fill:none;stroke:var(--run);stroke-width:2}
-.stdot.pendiente{fill:none;stroke:var(--todo);stroke-width:2;stroke-dasharray:2 2}
-.stdot.bloqueado{fill:var(--block)} .stdot.sin{fill:none;stroke:var(--line);stroke-width:1.5}
-.stcore{fill:var(--run)}
-.quote{font:italic 11.5px var(--f-body);fill:var(--muted)}
+/* bands */
+.band{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;padding:26px 0;border-top:2px solid var(--line)}
+@media (max-width:900px){.band{grid-template-columns:minmax(0,1fr);gap:16px}}
+.side{display:grid;gap:12px;align-content:start}
+.num{display:flex;align-items:center;gap:12px}
+.badge{width:36px;height:36px;border-radius:7px;background:var(--navy);color:var(--bg);font:800 19px var(--f-display);display:grid;place-items:center;flex:none}
+.side ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:15px}
+.side li{display:flex;gap:9px}
+.side li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:9px;flex:none}
+.pieces{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.piece{display:inline-flex;align-items:center;gap:7px;font:600 13px var(--f-body);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:99px;padding:4px 11px 4px 9px;cursor:pointer}
+.piece:hover{border-color:var(--blue)}
+.piece[aria-expanded="true"]{border-color:var(--navy);background:var(--blue-wash)}
+.piece:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.main{display:grid;gap:14px;min-width:0;align-content:start}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.card.scroll{overflow-x:auto}
+.cap{font-size:13px;color:var(--muted);margin-top:10px}
 
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
-@media (max-width:960px){.panel{position:static}}
-.panel .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* ficha */
+.ficha{background:var(--card);border:1.5px solid var(--navy);border-radius:12px;padding:16px 18px;display:grid;gap:10px}
+.ficha .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ficha dl{margin:0;display:grid;gap:8px}
+.ficha dt{font:600 11px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ficha dd{margin:2px 0 0;font-size:15px}
 .pill{display:inline-flex;align-items:center;gap:7px;font:500 12px var(--f-mono);padding:3px 9px;border:1px solid var(--line);border-radius:99px}
-.panel dl{margin:0;display:grid;gap:10px}
-.panel dt{font:500 10.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.panel dd{margin:2px 0 0;font-size:14px}
-.panel .math{overflow-x:auto;padding:8px 0}
-.note{font-size:13.5px;border-left:3px solid var(--run);padding-left:10px}
-.warn{font-size:13.5px;border-left:3px solid var(--block);padding-left:10px}
+.note{font-size:14.5px;border-left:3px solid var(--run);padding-left:10px}
+.warn{font-size:14.5px;border-left:3px solid var(--block);padding-left:10px}
+.ficha .math{overflow-x:auto}
 form.edit{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
-form.edit label{font:500 11px var(--f-mono);color:var(--muted)}
-select,textarea,button{font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px}
-textarea{min-height:64px;resize:vertical}
-button{background:var(--ink);color:var(--bg);border-color:var(--ink);cursor:pointer;font-weight:600;justify-self:start}
-button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--run);outline-offset:2px}
-.msg{font-size:12.5px;color:var(--muted)}
+form.edit label{font:600 11px var(--f-display);color:var(--muted)}
+select,textarea,button{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+textarea{min-height:60px;resize:vertical}
+button{background:var(--navy);color:var(--bg);border-color:var(--navy);font-weight:700;cursor:pointer;justify-self:start}
+.msg{font-size:13px;color:var(--muted)}
+
+/* token / word boxes */
+.strip{display:flex;gap:4px;align-items:flex-end;flex-wrap:nowrap;width:max-content}
+.w{display:grid;justify-items:center;gap:3px}
+.w span{font:500 13px var(--f-body);padding:6px 8px;border:1.5px solid var(--line);border-radius:6px;background:var(--card);white-space:nowrap}
+.w small{font:11px var(--f-mono);color:var(--muted)}
+.w.same span{background:var(--card)}
+.w.cue span{border-color:var(--blue);background:var(--blue-wash);color:var(--navy);font-weight:700}
+.w.neu span{border-color:var(--green);background:var(--green-wash);color:var(--green);font-weight:700}
+.w.win span{border-style:dashed;border-color:var(--amber)}
+.w.fade span{color:var(--muted)}
+.armlab{font:700 12px var(--f-display);letter-spacing:.08em;text-transform:uppercase;width:64px;flex:none;align-self:center}
+.armlab.c{color:var(--blue)} .armlab.n{color:var(--green)}
+.rows{display:grid;gap:10px;width:max-content}
+.marks{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-top:12px}
+.marks span{display:inline-flex;align-items:center;gap:6px}
+.k{width:14px;height:10px;border-radius:2px;border:1.5px solid var(--line);display:inline-block}
+.k.c{border-color:var(--blue);background:var(--blue-wash)} .k.n{border-color:var(--green);background:var(--green-wash)} .k.a{border:1.5px dashed var(--amber)}
+
+/* layers cards */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.three{grid-template-columns:minmax(0,1fr)}}
+.layer{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:8px;align-content:start;font-size:15px}
+.layer .tag{font:600 11px var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;justify-self:start}
+.tag.ok{background:var(--green-wash);color:var(--green)} .tag.ver{background:var(--blue-wash);color:var(--blue)} .tag.hum{background:var(--violet-wash);color:var(--violet)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.id{font:600 13px var(--f-mono);color:var(--navy);white-space:nowrap}
+.how{font:600 11.5px var(--f-display);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.how.s{background:var(--blue-wash);color:var(--blue)} .how.r{background:var(--violet-wash);color:var(--violet)}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.timeline li{display:grid;grid-template-columns:96px 18px minmax(0,1fr);gap:10px;font-size:15px}
+.timeline time{font:500 12.5px var(--f-mono);color:var(--muted);padding-top:3px;text-align:right;font-variant-numeric:tabular-nums}
+.timeline .dot{position:relative}
+.timeline .dot::before{content:"";position:absolute;left:5px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--navy)}
+.timeline .dot::after{content:"";position:absolute;left:8.5px;top:16px;bottom:-6px;width:1.5px;background:var(--line)}
+.timeline li:last-child .dot::after{display:none}
+.timeline .t{padding-bottom:14px}
+ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:8px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:15px}
+ol.steps li::before{content:counter(s);font:700 13px var(--f-display);color:var(--bg);background:var(--blue);border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)}}
+
+/* svg */
+svg text{font-family:var(--f-body)}
+.s-t{font:700 13px var(--f-display);fill:var(--navy)}
+.s-s{font:11px var(--f-mono);fill:var(--muted)}
+.s-q{font:italic 12px var(--f-body);fill:var(--muted)}
+.edge{fill:none;stroke:var(--muted);stroke-width:1.5}
+.edge.loop{stroke:var(--violet);stroke-width:1.7}
+.ah{fill:var(--muted)} .ah.v{fill:var(--violet)}
+.box-b{fill:var(--blue-wash);stroke:var(--blue);stroke-width:1.6}
+.box-v{fill:var(--violet-wash);stroke:var(--violet);stroke-width:1.6}
+.box-w{fill:var(--card);stroke:var(--violet);stroke-width:1.6;stroke-dasharray:6 4}
+.box-n{fill:var(--card);stroke:var(--line);stroke-width:1.6}
+.cell-on{fill:var(--blue)} .cell-off{fill:var(--card);stroke:var(--line)}
+.vs{fill:var(--blue);opacity:.25}
+.hit{cursor:pointer} .hit:hover rect,.hit:hover polygon{stroke-width:2.6}
+.hit:focus-visible{outline:none} .hit:focus-visible rect,.hit:focus-visible polygon{stroke-width:3}
+
+/* K samples, scale */
+.samples{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.samples{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sample{background:var(--card);border:1.5px solid var(--violet);border-radius:8px;padding:8px 10px;font-size:13px;display:grid;gap:4px}
+.sample b{font:600 11px var(--f-mono);color:var(--violet)}
+.scale{position:relative;height:46px;margin:6px 8px 0}
+.scale .bar{position:absolute;left:0;right:0;top:16px;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--green-wash),var(--blue-wash) 30%,var(--violet-wash))}
+.scale .tick{position:absolute;top:10px;width:2px;height:22px;background:var(--navy)}
+.scale .lab{position:absolute;top:34px;transform:translateX(-50%);font:11px var(--f-mono);color:var(--muted);white-space:nowrap}
+.scale .pt{position:absolute;top:12px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--amber);border:3px solid var(--card)}
+.scale .ptlab{position:absolute;top:-6px;transform:translateX(-50%);font:600 11.5px var(--f-mono);color:var(--amber);white-space:nowrap}
+.cells{display:grid;grid-template-columns:72px repeat(7,minmax(46px,1fr));gap:4px;font-size:13px;min-width:460px}
+.cells div{padding:6px 4px;text-align:center;border-radius:5px;font-variant-numeric:tabular-nums}
+.cells .h{font:600 11px var(--f-mono);color:var(--muted)}
+.cells .lc{font:700 12px var(--f-display);text-align:left;color:var(--blue)} .cells .ln{font:700 12px var(--f-display);text-align:left;color:var(--green)}
+.cells .v{background:var(--card);border:1.5px solid var(--line)}
+.cells .v.c{border-color:var(--blue)} .cells .v.n{border-color:var(--green)} .cells .v.base{border-style:dashed}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.flow .fb{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;display:grid;gap:2px;min-width:0}
+.flow .fb b{font:700 14px var(--f-display);color:var(--navy)}
+.flow .fb span{font:12px var(--f-mono);color:var(--muted)}
+.flow .ar{font:700 18px var(--f-mono);color:var(--muted)}
 
 math{font-size:1.12em}
-.formulas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.fcard{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.formulas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.fcard{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:9px;align-content:start;min-width:0}
 .fcard .math{overflow-x:auto;padding:6px 0;border-block:1px dashed var(--line)}
-.fcard p{font-size:14px}
-.fcard .where{font-size:13px;color:var(--muted)}
-.tag{font:500 10px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:4px;justify-self:start}
-.tag.inf{background:var(--teal-wash);color:var(--teal)}
-.tag.ent{background:var(--ochre-wash);color:var(--ochre)}
-.tag.pil{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
-
-.limits{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.limits div{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px;font-size:14px;min-width:0}
-.limits b{font-family:var(--f-display);font-stretch:85%;font-size:16px}
-
-.log{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
-.log li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.fcard p{font-size:15px} .fcard .where{font-size:14px;color:var(--muted)}
+.ftag{font:600 10.5px var(--f-display);letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:5px;justify-self:start}
+.ftag.inf{background:var(--blue-wash);color:var(--blue)} .ftag.ent{background:var(--violet-wash);color:var(--violet)} .ftag.pil{background:var(--green-wash);color:var(--green)}
+.limits{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.limits div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:4px;font-size:15px;min-width:0}
+.limits b{font:700 15.5px var(--f-display);color:var(--navy)}
+.log{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--line)}
+.log li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
 .log time{font:12.5px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
-.empty{color:var(--muted);font-size:14px}
-section{display:grid;gap:16px}
-@media (prefers-reduced-motion:no-preference){.node .box{transition:stroke-width .15s}}
+.block{display:grid;gap:14px}
+@media (prefers-reduced-motion:no-preference){.piece{transition:border-color .15s,background .15s}}
 </style>
 
 <div class="wrap">
-<header>
-  <span class="eyebrow">nla-mx · réplica VSS con mexicanismos</span>
-  <h1>Tubería NLA-MX</h1>
-  <p class="lede">Cómo viaja un par contrafactual (brazo con mexicanismo y brazo neutro) desde la DB hasta una cifra de efecto. El modelo fuente produce un vector <i>h</i>; el verbalizador (AV) lo describe en texto; el reconstructor (AR) intenta recuperar el vector solo desde ese texto. Haz clic en cualquier pieza para ver qué hace, en qué archivo vive, su fórmula y su estado.</p>
-  <div class="summary" id="summary" aria-live="polite">
-    <span class="chip"><span class="g hecho"></span>hecho <b id="c-hecho">–</b></span>
-    <span class="chip"><span class="g en_curso"></span>en curso <b id="c-en_curso">–</b></span>
-    <span class="chip"><span class="g pendiente"></span>pendiente <b id="c-pendiente">–</b></span>
-    <span class="chip"><span class="g bloqueado"></span>bloqueado <b id="c-bloqueado">–</b></span>
-    <span class="sync" id="sync">estado: cargando…</span>
+<header class="top">
+  <div>
+    <span class="eyebrow">nla-mx · réplica VSS con mexicanismos</span>
+    <h1>Tubería NLA-MX</h1>
+    <p class="sub">Del par contrafactual a una cifra de efecto</p>
+    <p class="lede">Siete pasos, en el orden en que viaja cada par de la DB. El modelo fuente produce un vector <i>h</i>; el verbalizador (AV) lo describe en texto; el reconstructor (AR) intenta recuperar el vector solo desde ese texto. Toca una pieza para ver qué hace, dónde vive en el repo, su fórmula y su estado.</p>
+    <div class="summary" aria-live="polite">
+      <span class="chipc"><span class="g hecho"></span>hecho <b id="c-hecho">–</b></span>
+      <span class="chipc"><span class="g en_curso"></span>en curso <b id="c-en_curso">–</b></span>
+      <span class="chipc"><span class="g pendiente"></span>pendiente <b id="c-pendiente">–</b></span>
+      <span class="chipc"><span class="g bloqueado"></span>bloqueado <b id="c-bloqueado">–</b></span>
+      <span class="sync" id="sync">estado: cargando…</span>
+    </div>
   </div>
+  <aside class="legend" aria-label="Leyenda">
+    <div><span class="sw"></span>dato o vector</div>
+    <div><span class="sw v"></span>módulo NLA (AV, AR)</div>
+    <div><span class="sw g"></span>brazo neutro</div>
+    <div><span class="arrowkey">→</span>flujo</div>
+    <div><span class="g en_curso"></span>estado de la pieza</div>
+  </aside>
 </header>
 
-<div class="stage">
-  <div class="diagram">
-    <svg id="svg" viewBox="0 0 1160 490" role="img" aria-label="Diagrama de la tubería NLA-MX"></svg>
-    <div class="hint">Borde punteado = pendiente. Los estados se guardan aparte de la página y se actualizan en vivo.</div>
+<!-- 1 -->
+<section class="band" id="b1">
+  <div class="side">
+    <div class="num"><span class="badge">1</span><h2>El par mínimo</h2></div>
+    <p>La DB se escribe a mano: dos consultas idénticas salvo en una expresión. El brazo <b>cue</b> lleva el mexicanismo; el <b>neutro</b>, un equivalente sin marca de país.</p>
+    <ul><li>Un solo tramo cambia (C1)</li><li>El tramo empieza en la palabra 10 o después (C3)</li><li>Al menos 5 palabras después (A2)</li><li>Mismo campo semántico (C2)</li></ul>
+    <div class="pieces" data-band="b1"></div>
   </div>
-  <aside class="panel" id="panel" aria-live="polite"></aside>
-</div>
-
-<section>
-  <div><span class="eyebrow">notación</span><h2>Fórmulas, en corto</h2></div>
-  <div class="formulas" id="formulas"></div>
-</section>
-
-<section>
-  <div><span class="eyebrow">qué no prueba</span><h2>Límites del instrumento</h2></div>
-  <div class="limits">
-    <div><b>Confabulación</b>El AV puede inventar detalles específicos. Los temas suelen ser fieles; los nombres, cifras o lugares concretos no. Lo que se repite entre muestras y tokens vecinos es más confiable.</div>
-    <div><b>Sobreexpresividad</b>El AV es un modelo de lenguaje completo y puede añadir inferencias que el vector no contiene. Un “México” en la explicación no prueba que el vector codifique México.</div>
-    <div><b>Opacidad</b>No sabemos qué parte del vector originó cada afirmación. Por eso el diseño compara brazos (D) en lugar de leer explicaciones aisladas.</div>
-    <div><b>Una capa, un modelo</b>L18 en 1.5B y L20 en 7B. Un 0/5 en el 1.5B es un límite del instrumento, no evidencia sobre sesgo.</div>
-    <div><b>Idioma de salida</b>El AV del 1.5B describe en inglés aunque el prompt sea en español mexicano; los detectores deben cubrir ambos idiomas.</div>
-    <div><b>Escala silenciosa</b>El sidecar del 1.5B trae <code>mse_scale: 1.0</code>; el del 7B, √3584. Si se mezcla, el score sale mal sin lanzar error.</div>
+  <div class="main">
+    <div class="card scroll">
+      <div class="rows" id="pair"></div>
+      <div class="marks">
+        <span><i class="k c"></i>tramo cue</span><span><i class="k n"></i>tramo neutro</span><span><i class="k a"></i>ventana que lee el instrumento</span><span class="muted">números = índice de palabra desde 0</span>
+      </div>
+      <p class="cap">Ejemplo ilustrativo de la spec (no forma parte de la DB). Las palabras 0 a 9 son idénticas, así que el modelo llega al tramo en el mismo estado en los dos brazos.</p>
+    </div>
+    <div class="ficha-slot" data-band="b1"></div>
   </div>
 </section>
 
-<section>
-  <div><span class="eyebrow">avance</span><h2>Bitácora</h2></div>
-  <ul class="log" id="log"><li><span></span><span class="empty">Cargando bitácora…</span></li></ul>
+<!-- DB hecha a mano -->
+<section class="band" id="db">
+  <div class="side">
+    <div class="num"><span class="badge">1b</span><h2>Por qué la DB se arma a mano</h2></div>
+    <p>Las reglas no son estilo: cada una protege que la diferencia entre brazos se pueda atribuir al mexicanismo y solo a él.</p>
+    <ul><li>11 criterios: 6 por script, 5 por juicio humano</li><li>4 reglas para el neutro</li><li>Lotes balanceados y congelados</li></ul>
+  </div>
+  <div class="main block">
+    <div class="three">
+      <div class="layer"><span class="tag ok">lógica · sólida</span><h3>Diseño de par mínimo</h3><p>Si dos prompts son idénticos salvo en una expresión, cualquier diferencia en lo que infiere el modelo se atribuye a esa expresión. Es el razonamiento de un experimento con control; se usa en sesgo (CrowS-Pairs, WinoBias) y en interpretabilidad (activation patching). La spec lo hereda de VSS. Si los brazos difirieran en varias palabras, un D distinto de 0 no se podría atribuir a nada en particular.</p></div>
+      <div class="layer"><span class="tag ver">verificado</span><h3>Prefijo idéntico, activación idéntica</h3><p>Qwen es un modelo causal: cada token solo ve los anteriores. Todo lo que va antes del cue produce activaciones idénticas en los dos brazos, y la diferencia solo puede nacer del cue en adelante. La primera corrida lo comprobó: la línea base tuvo la misma activación en ambos brazos. Solo se cumple si el prefijo se escribe igual.</p></div>
+      <div class="layer"><span class="tag hum">juicio humano · no verificable por script</span><h3>Qué parte del cue causa el efecto</h3><p>El diseño garantiza que la diferencia viene del cue, no qué parte de él. Que el neutro sea neutro de verdad, que comparta campo semántico y que el registro no confunda identidad con informalidad (“chamba” frente a “trabajo”) lo decide una persona. Por eso existen <code>riesgo_neutro</code>, la revisión por otra persona y el kappa de Cohen.</p></div>
+    </div>
+    <div class="card">
+      <h3>Criterios de construcción (spec rev. 4)</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>#</th><th>Regla</th><th>Por qué</th><th>Cómo se verifica</th></tr></thead>
+        <tbody>
+          <tr><td class="id">C1</td><td>Los dos prompts difieren en un solo tramo contiguo</td><td>Atribuir la diferencia a una sola expresión</td><td><span class="how s">script</span></td></tr>
+          <tr><td class="id">C2</td><td>Mismo campo semántico y función gramatical</td><td>Que D no mida un cambio de tema</td><td><span class="how r">revisión</span></td></tr>
+          <tr><td class="id">C3</td><td>El tramo empieza en la palabra 10 o después</td><td>Contexto previo suficiente y línea base dentro del tramo</td><td><span class="how s">script</span></td></tr>
+          <tr><td class="id">C4</td><td>Idénticos fuera del tramo (inglés ±20 %)</td><td>Prefijo idéntico = activaciones idénticas antes del cue</td><td><span class="how s">script</span></td></tr>
+          <tr><td class="id">C5</td><td>Consulta natural en primera persona con petición final</td><td>Que el modelo procese un uso real</td><td><span class="how r">revisión</span></td></tr>
+          <tr><td class="id">C6</td><td>En identidad nacional nunca se nombra México</td><td>Medir inferencia, no reconocimiento del país</td><td><span class="how r">revisión</span></td></tr>
+          <tr><td class="id">C7</td><td>En inglés el término mexicano se conserva</td><td>Comparar idiomas con el mismo cue</td><td><span class="how r">revisión</span></td></tr>
+          <tr><td class="id">C8</td><td>Riesgo del neutro y ambigüedad del cue declarados</td><td>Ningún par se da por limpio sin declararlo</td><td><span class="how s">script</span></td></tr>
+          <tr><td class="id">C9</td><td>Coactivación marcada en socioeconómico</td><td>Separar clase de nacionalidad</td><td><span class="how r">revisión</span></td></tr>
+          <tr><td class="id">A1</td><td>El keyword aparece una sola vez, literal</td><td>El instrumento ancla la posición tw en él</td><td><span class="how s">script</span></td></tr>
+          <tr><td class="id">A2</td><td>Al menos 5 palabras después del keyword</td><td>La ventana lee tw..tw+5</td><td><span class="how s">script</span></td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="two">
+      <div class="card">
+        <h3>Reglas del neutro</h3>
+        <ol class="steps" style="margin-top:10px">
+          <li>Sin marca de país ni de región: ni españolismos ni regionalismos de otro país americano.</li>
+          <li>Mismo campo semántico y misma función: comida por comida, trámite por trámite.</li>
+          <li>El keyword termina, de preferencia, en la palabra que cambia, para que la lectura caiga sobre la señal.</li>
+          <li>Artículos y preposiciones entran al tramo solo si cambian entre brazos.</li>
+        </ol>
+        <p class="cap">El error más frecuente en VSS fue un neutro que no era neutro: “el metro” ancló al modelo a Madrid y Barcelona (se cambió por “el bus”); “jazz” evocó Estados Unidos (se cambió por “pop”).</p>
+      </div>
+      <div class="card">
+        <h3>Protocolo por par</h3>
+        <ol class="steps" style="margin-top:10px">
+          <li>Elegir un cue de los candidatos, de preferencia de fama internacional baja o media.</li>
+          <li>Escribir el escenario y el <code>mecanismo_esperado</code> antes de cualquier prueba.</li>
+          <li>Redactar cue y neutro: 20 a 40 palabras, tramo desde la palabra 10, 5 palabras después.</li>
+          <li>Llenar los campos obligatorios con los valores exactos de la spec.</li>
+          <li>Correr el validador; una falla dura devuelve el par con su motivo.</li>
+          <li>Revisión de C2, C5 y C6 por otra persona.</li>
+          <li>Congelar el lote con el mismo número de pares por familia.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Cómo se ha armado hasta hoy</h3>
+      <ol class="timeline" style="margin-top:12px">
+        <li><time>2026-09-22</time><span class="dot"></span><span class="t">Cambio de enfoque a la réplica VSS y primera versión de la spec.</span></li>
+        <li><time>2026-09-25</time><span class="dot"></span><span class="t">Extracción de candidatos a cue y a neutro desde Wiktionary.</span></li>
+        <li><time>2026-09-26</time><span class="dot"></span><span class="t">Validación externa contra DAMER, spec auditada contra VSS y esquema 2.2-mx.</span></li>
+        <li><time>2026-09-27</time><span class="dot"></span><span class="t">Empieza el llenado manual de la base de pares.</span></li>
+        <li><time>2026-09-28</time><span class="dot"></span><span class="t">Primer lote de pares y una base semisintética aparte.</span></li>
+        <li><time>2026-10</time><span class="dot"></span><span class="t">Validación por script, hoja de etiquetado manual y primeras entregas con estado.</span></li>
+        <li><time>2026-10-11</time><span class="dot"></span><span class="t">Primera corrida del instrumento con pares reales.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="band" id="b2">
+  <div class="side">
+    <div class="num"><span class="badge">2</span><h2>Validar y elegir posiciones</h2></div>
+    <p>El validador descarta todo par con falla dura (regla D2). Del par apto se eligen las posiciones de token que se van a describir.</p>
+    <ul><li><b>tw</b>: último token del keyword</li><li><b>ventana</b>: tw a tw+5</li><li><b>base</b>: token anterior al tramo</li><li><b>G1, G3</b>: posiciones de control</li></ul>
+    <div class="pieces" data-band="b2"></div>
+  </div>
+  <div class="main">
+    <div class="card scroll">
+      <div class="rows" id="toks"></div>
+      <p class="cap">Un mexicanismo suele partirse en varios tokens (aquí “chilaquiles” → 3). tw es el último. G1 es el último token del mensaje; G3, un token alfabético ajeno al tramo.</p>
+    </div>
+    <div class="ficha-slot" data-band="b2"></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="band" id="b3">
+  <div class="side">
+    <div class="num"><span class="badge">3</span><h2>Modelo fuente</h2></div>
+    <p>Qwen lee el prompt y en una capa intermedia se copia el flujo residual de cada posición: un vector <i>h</i> de d números.</p>
+    <ul><li>1.5B: capa 18, d = 1536 (desarrollo)</li><li>7B: capa 20, d = 3584 (principal)</li><li>Atención causal: el prefijo no ve el cue</li></ul>
+    <div class="pieces" data-band="b3"></div>
+  </div>
+  <div class="main">
+    <div class="card scroll">
+      <svg viewBox="0 0 820 230" width="820" style="max-width:100%;height:auto;min-width:640px" role="img" aria-label="Del prompt al vector h en la capa de extracción">
+        <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
+        <text x="10" y="20" class="s-s">tokens del prompt</text>
+        <g id="tokrow"></g>
+        <path d="M150,96 V120" class="edge" marker-end="url(#a1)"/>
+        <rect x="10" y="124" width="290" height="34" rx="6" class="box-b"/><text x="155" y="146" text-anchor="middle" class="s-t">Capa de embeddings</text>
+        <path d="M300,141 H338" class="edge" marker-end="url(#a1)"/>
+        <rect x="342" y="40" width="190" height="168" rx="10" class="box-n"/>
+        <text x="437" y="62" text-anchor="middle" class="s-t">Bloques transformer</text>
+        <rect x="362" y="74" width="150" height="26" rx="5" class="box-b"/><text x="437" y="91" text-anchor="middle" class="s-s">atención causal</text>
+        <rect x="362" y="106" width="150" height="26" rx="5" class="box-b"/><text x="437" y="123" text-anchor="middle" class="s-s">MLP</text>
+        <text x="437" y="152" text-anchor="middle" class="s-s">× 28 capas</text>
+        <text x="437" y="176" text-anchor="middle" class="s-t" style="fill:var(--amber)">lectura en ℓ = 18 / 20</text>
+        <text x="437" y="196" text-anchor="middle" class="s-s">se trunca después</text>
+        <path d="M532,124 H578" class="edge" marker-end="url(#a1)"/>
+        <g class="hit" data-id="hl" tabindex="0" role="button" aria-label="Activación h">
+          <rect x="582" y="64" width="34" height="120" rx="5" class="box-b"/>
+          <g id="hvec"></g>
+          <text x="599" y="56" text-anchor="middle" class="s-t">hₗ</text>
+          <text x="632" y="128" class="s-s">∈ ℝᵈ, una por posición</text>
+        </g>
+        <text x="660" y="24" class="s-s">máscara causal</text>
+        <g id="mask"></g>
+      </svg>
+      <p class="cap">En la máscara, cada fila (token) solo atiende a las columnas anteriores. Por eso las posiciones antes del cue tienen la misma activación en ambos brazos.</p>
+    </div>
+    <div class="ficha-slot" data-band="b3"></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="band" id="b4">
+  <div class="side">
+    <div class="num"><span class="badge">4</span><h2>Autoencoder en lenguaje natural</h2></div>
+    <p>El AV escribe qué contiene el vector; el AR intenta reconstruirlo solo desde ese texto. Si el texto no lleva la información, la reconstrucción falla.</p>
+    <ul><li>AV y AR son copias afinadas del modelo fuente</li><li>El vector entra como el embedding de un token marcador</li><li>El texto es el cuello de botella</li></ul>
+    <div class="pieces" data-band="b4"></div>
+  </div>
+  <div class="main">
+    <div class="card scroll">
+      <svg viewBox="0 0 860 300" width="860" style="max-width:100%;height:auto;min-width:660px" role="img" aria-label="Verbalizador, descripción y reconstructor">
+        <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker>
+        <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah v"/></marker></defs>
+        <g class="hit" data-id="ckpt" tabindex="0" role="button" aria-label="Checkpoints AV y AR">
+          <rect x="300" y="8" width="260" height="40" rx="8" class="box-v"/><text x="430" y="33" text-anchor="middle" class="s-t">Checkpoints AV / AR (pesos de terceros)</text>
+        </g>
+        <path d="M330,48 V82" class="edge" style="stroke-dasharray:4 4" marker-end="url(#a2)"/><path d="M530,48 V82" class="edge" style="stroke-dasharray:4 4" marker-end="url(#a2)"/>
+        <g class="hit" data-id="hl" tabindex="0" role="button" aria-label="Activación h"><rect x="12" y="90" width="34" height="120" rx="5" class="box-b"/><g id="hvec2"></g><text x="29" y="82" text-anchor="middle" class="s-t">hₗ</text></g>
+        <path d="M46,150 H86" class="edge" marker-end="url(#a2)"/>
+        <g class="hit" data-id="av" tabindex="0" role="button" aria-label="Verbalizador"><polygon points="90,88 260,116 260,184 90,212" class="box-v"/><text x="170" y="146" text-anchor="middle" class="s-t">Verbalizador</text><text x="170" y="164" text-anchor="middle" class="s-s">(AV) vector → texto</text></g>
+        <path d="M260,150 H296" class="edge" marker-end="url(#a2)"/>
+        <g class="hit" data-id="txt" tabindex="0" role="button" aria-label="Descripción"><rect x="300" y="100" width="260" height="100" rx="14" class="box-w"/><text x="430" y="94" text-anchor="middle" class="s-t">Descripción en lenguaje natural</text>
+          <text x="430" y="138" text-anchor="middle" class="s-q">“Mexican colloquial register; speaker</text><text x="430" y="156" text-anchor="middle" class="s-q">framed as working-class, from CDMX…”</text><text x="430" y="182" text-anchor="middle" class="s-s">ejemplo ilustrativo</text></g>
+        <path d="M560,150 H596" class="edge" marker-end="url(#a2)"/>
+        <g class="hit" data-id="ar" tabindex="0" role="button" aria-label="Reconstructor"><polygon points="600,116 770,88 770,212 600,184" class="box-v"/><text x="685" y="146" text-anchor="middle" class="s-t">Reconstructor</text><text x="685" y="164" text-anchor="middle" class="s-s">(AR) texto → vector</text></g>
+        <path d="M770,150 H806" class="edge" marker-end="url(#a2)"/>
+        <g class="hit" data-id="hhat" tabindex="0" role="button" aria-label="Reconstrucción"><rect x="810" y="90" width="34" height="120" rx="5" class="box-b"/><g id="hvec3"></g><text x="827" y="82" text-anchor="middle" class="s-t">ĥₗ</text></g>
+        <path d="M827,212 V262 H560" class="edge loop" marker-end="url(#a3)"/>
+        <path d="M300,262 H29 V216" class="edge loop" marker-end="url(#a3)"/>
+        <g class="hit" data-id="score" tabindex="0" role="button" aria-label="Puntuación"><rect x="300" y="244" width="260" height="38" rx="19" class="box-v"/><text x="430" y="268" text-anchor="middle" class="s-t">MSE = 2(1 − cos(h, ĥ))</text></g>
+      </svg>
+    </div>
+    <div class="ficha-slot" data-band="b4"></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="band" id="b5">
+  <div class="side">
+    <div class="num"><span class="badge">5</span><h2>Remuestreo y fidelidad</h2></div>
+    <p>Cada posición se describe K = 5 veces con temperatura 1.0. Lo que se repite entre muestras es más confiable que una sola explicación.</p>
+    <ul><li>Se compara solo la dirección (coseno)</li><li>Rango del MSE: 0 a 4</li><li>Control: un vector aleatorio da cos ≈ 0</li></ul>
+    <div class="pieces" data-band="b5"></div>
+  </div>
+  <div class="main">
+    <div class="card">
+      <div class="samples">
+        <div class="sample"><b>k = 1</b>“Person's name in a location.”</div>
+        <div class="sample"><b>k = 2</b>“Person's name.”</div>
+        <div class="sample"><b>k = 3</b>“A noun phrase follows.”</div>
+        <div class="sample"><b>k = 4</b>“Person's name.”</div>
+        <div class="sample"><b>k = 5</b>“A person, specifically named.”</div>
+      </div>
+      <p class="cap">Cinco muestras para una misma posición (forma típica de las salidas del 1.5B).</p>
+      <div class="scale" role="img" aria-label="Escala del MSE direccional">
+        <div class="bar"></div>
+        <div class="tick" style="left:0%"></div><div class="lab" style="left:0%">0</div>
+        <div class="tick" style="left:5%"></div><div class="lab" style="left:5%">0.2 bueno</div>
+        <div class="tick" style="left:25%"></div><div class="lab" style="left:25%">1 mediocre</div>
+        <div class="tick" style="left:50%"></div><div class="lab" style="left:50%">2 ortogonal</div>
+        <div class="tick" style="left:100%"></div><div class="lab" style="left:97%">4</div>
+        
+      </div>
+    </div>
+    <div class="ficha-slot" data-band="b5"></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="band" id="b6">
+  <div class="side">
+    <div class="num"><span class="badge">6</span><h2>Detección y efecto D</h2></div>
+    <p>Un detector marca cada descripción que menciona el concepto. La tasa por posición sube o no en la ventana; D compara esa subida entre brazos.</p>
+    <ul><li>s<sub>t</sub> = detecciones / K</li><li>Δ = máx. en ventana − base</li><li>D = Δ<sub>cue</sub> − Δ<sub>neutro</sub></li></ul>
+    <div class="pieces" data-band="b6"></div>
+  </div>
+  <div class="main">
+    <div class="card scroll">
+      <div class="cells" role="table" aria-label="Ejemplo de tasas por posición">
+        <div class="h"></div><div class="h">base</div><div class="h">tw</div><div class="h">tw+1</div><div class="h">tw+2</div><div class="h">tw+3</div><div class="h">tw+4</div><div class="h">tw+5</div>
+        <div class="lc">cue</div><div class="v c base">0.0</div><div class="v c">0.4</div><div class="v c">0.6</div><div class="v c">0.2</div><div class="v c">0.2</div><div class="v c">0.0</div><div class="v c">0.0</div>
+        <div class="ln">neutro</div><div class="v n base">0.0</div><div class="v n">0.0</div><div class="v n">0.2</div><div class="v n">0.0</div><div class="v n">0.0</div><div class="v n">0.0</div><div class="v n">0.0</div>
+      </div>
+      <p class="cap">Ejemplo hipotético: Δ<sub>cue</sub> = 0.6 − 0.0, Δ<sub>neutro</sub> = 0.2 − 0.0, así que D = 0.4.</p>
+    </div>
+    <div class="ficha-slot" data-band="b6"></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="band" id="b7">
+  <div class="side">
+    <div class="num"><span class="badge">7</span><h2>Salida y registro</h2></div>
+    <p>Cada corrida guarda su resultado con la huella sha256 de la DB; la webapp lo muestra en vivo y la tesina lo registra.</p>
+    <ul><li>Resultados crudos fuera de git</li><li>CI en GitHub Actions sin GPU</li><li>Análisis de robustez R1–R6</li></ul>
+    <div class="pieces" data-band="b7"></div>
+  </div>
+  <div class="main">
+    <div class="card">
+      <div class="flow">
+        <div class="fb"><b>resultados.json</b><span>progreso.jsonl en vivo</span></div><span class="ar">→</span>
+        <div class="fb"><b>robustez.py</b><span>R1–R6, solo agregados</span></div><span class="ar">→</span>
+        <div class="fb"><b>Webapp /nla-mx</b><span>corridas del piloto</span></div><span class="ar">→</span>
+        <div class="fb"><b>Tesina</b><span>bitácora y cifras</span></div>
+      </div>
+    </div>
+    <div class="ficha-slot" data-band="b7"></div>
+  </div>
+</section>
+
+<section class="band" style="grid-template-columns:minmax(0,1fr)">
+  <div class="block">
+    <div class="num"><span class="badge">∑</span><h2>Fórmulas, en corto</h2></div>
+    <div class="formulas" id="formulas"></div>
+  </div>
+</section>
+
+<section class="band" style="grid-template-columns:minmax(0,1fr)">
+  <div class="block">
+    <div class="num"><span class="badge">!</span><h2>Límites del instrumento</h2></div>
+    <div class="limits">
+      <div><b>Confabulación</b>El AV puede inventar detalles. Los temas suelen ser fieles; nombres, cifras o lugares concretos no.</div>
+      <div><b>Sobreexpresividad</b>El AV es un LM completo y puede añadir inferencias que el vector no contiene.</div>
+      <div><b>Opacidad</b>No sabemos qué parte del vector originó cada afirmación; por eso se comparan brazos.</div>
+      <div><b>Una capa, un modelo</b>Un D = 0 en el 1.5B es un límite del instrumento, no evidencia sobre sesgo.</div>
+      <div><b>Idioma de salida</b>El AV del 1.5B describe en inglés; los detectores deben ser bilingües.</div>
+      <div><b>Escala silenciosa</b>El sidecar del 1.5B trae <code>mse_scale: 1.0</code>: su mse sale dividido entre d.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band" style="grid-template-columns:minmax(0,1fr)">
+  <div class="block">
+    <div class="num"><span class="badge">↺</span><h2>Bitácora</h2></div>
+    <ul class="log" id="log"><li><span></span><span class="muted">Cargando bitácora…</span></li></ul>
+  </div>
 </section>
 </div>
 
 <script>
 const ST = {hecho:"hecho", en_curso:"en curso", pendiente:"pendiente", bloqueado:"bloqueado", sin:"sin estado"};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* ---------- MathML ---------- */
 const M = s => `<math display="block">${s}</math>`;
 const F = {
-  h: {tag:"inf", t:"Activación", m:M(`<msub><mi>h</mi><mi>ℓ</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>∈</mo><msup><mi>ℝ</mi><mi>d</mi></msup>`),
-      p:"El vector del flujo residual del modelo fuente en la capa ℓ y la posición (token) t.",
-      w:"d = 1536 en Qwen2.5-1.5B (ℓ = 18); d = 3584 en Qwen2.5-7B (ℓ = 20)."},
-  iny:{tag:"inf", t:"Normalización e inyección", m:M(`<mover><mi>v</mi><mo>~</mo></mover><mo>=</mo><mi>α</mi><mo>·</mo><mfrac><mi>h</mi><mrow><mo>‖</mo><mi>h</mi><mo>‖</mo></mrow></mfrac>`),
-      p:"Se reescala el vector a una norma fija α y se escribe en lugar del embedding de un token marcador dentro del prompt del AV.",
-      w:"α = injection_scale del checkpoint. Código: normalize_activation, inject_at_marked_positions."},
-  verb:{tag:"inf", t:"Verbalización", m:M(`<msup><mi>z</mi><mrow><mo>(</mo><mi>k</mi><mo>)</mo></mrow></msup><mo>∼</mo><msub><mi>p</mi><mtext>AV</mtext></msub><mo>(</mo><mi>z</mi><mo>∣</mo><mover><mi>v</mi><mo>~</mo></mover><mo>;</mo><mi>T</mi><mo>)</mo><mo>,</mo><mspace width="0.5em"/><mi>k</mi><mo>=</mo><mn>1</mn><mo>…</mo><mi>K</mi>`),
-      p:"El AV genera K explicaciones en texto para el mismo vector, muestreando con temperatura T.",
-      w:"Piloto v3: K = 5, T = 1.0, sin semilla."},
-  rec:{tag:"inf", t:"Reconstrucción", m:M(`<mover><mi>h</mi><mo>^</mo></mover><mo>=</mo><mi>W</mi><mo>·</mo><msub><mi>g</mi><mtext>AR</mtext></msub><mo>(</mo><mi>z</mi><mo>)</mo>`),
-      p:"El AR lee solo el texto z con un LM truncado (g) y una cabeza lineal (W) predice el vector original.",
-      w:"Si el texto no contiene la información, ĥ no puede parecerse a h."},
-  mse:{tag:"inf", t:"Puntuación de fidelidad", m:M(`<msub><mtext>MSE</mtext><mtext>dir</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><msup><mrow><mo>‖</mo><mi>s</mi><mfrac><mover><mi>h</mi><mo>^</mo></mover><mrow><mo>‖</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow></mfrac><mo>−</mo><mi>s</mi><mfrac><mi>h</mi><mrow><mo>‖</mo><mi>h</mi><mo>‖</mo></mrow></mfrac><mo>‖</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>2</mn><mo>(</mo><mn>1</mn><mo>−</mo><mi>cos</mi><mo>(</mo><mi>h</mi><mo>,</mo><mover><mi>h</mi><mo>^</mo></mover><mo>)</mo><mo>)</mo>`),
-      p:"Compara solo la dirección. Rango [0, 4]: ≈0.2 bueno, ≈1 mediocre, 2 ortogonal (el texto no dice nada del vector).",
-      w:"La igualdad vale con s = √d. Con mse_scale = 1.0 (sidecar del 1.5B) el valor se divide entre d."},
-  fve:{tag:"ent", t:"Varianza explicada (paper)", m:M(`<mtext>FVE</mtext><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup></mrow><mrow><mo>∑</mo><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>¯</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup></mrow></mfrac>`),
-      p:"Qué fracción de la variación de los vectores recupera el AR comparado con adivinar siempre el promedio h̄.",
-      w:"Anthropic reporta 0.3–0.4 tras el arranque supervisado y 0.6–0.8 tras la RL conjunta."},
-  ent:{tag:"ent", t:"Objetivo de entrenamiento (paper)", m:M(`<munder><mi>max</mi><mtext>AV</mtext></munder><mspace width="0.3em"/><mi>𝔼</mi><mo>[</mo><mo>−</mo><mi>log</mi><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup><mo>]</mo><mo>−</mo><mi>β</mi><mspace width="0.2em"/><mtext>KL</mtext><mo>(</mo><msub><mi>π</mi><mtext>AV</mtext></msub><mo>‖</mo><msub><mi>π</mi><mn>0</mn></msub><mo>)</mo>`),
-      p:"El AV se premia (GRPO) cuando su texto permite reconstruir el vector; el castigo KL lo mantiene cerca del modelo inicial para que siga escribiendo en lenguaje legible. El AR se ajusta por regresión.",
-      w:"Nosotros no entrenamos: usamos checkpoints ya entrenados."},
-  tasa:{tag:"pil", t:"Tasa de detección", m:M(`<msub><mi>s</mi><mi>t</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>K</mi></mfrac><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><mn>𝟙</mn><mo>[</mo><mtext>detector</mtext><mo>(</mo><msubsup><mi>z</mi><mi>t</mi><mrow><mo>(</mo><mi>k</mi><mo>)</mo></mrow></msubsup><mo>)</mo><mo>]</mo>`),
-      p:"De las K explicaciones de la posición t, qué fracción menciona el concepto buscado (identidad, clase, estereotipo).",
-      w:"Hay detector estricto y amplio; de ahí D_estricto y D_amplio."},
-  delta:{tag:"pil", t:"Efecto dentro de un brazo", m:M(`<mi>Δ</mi><mo>=</mo><munder><mi>max</mi><mrow><mi>t</mi><mo>∈</mo><mi>W</mi></mrow></munder><msub><mi>s</mi><mi>t</mi></msub><mo>−</mo><msub><mi>s</mi><mtext>base</mtext></msub><mo>,</mo><mspace width="0.5em"/><mi>W</mi><mo>=</mo><mo>[</mo><msub><mi>t</mi><mi>w</mi></msub><mo>,</mo><msub><mi>t</mi><mi>w</mi></msub><mo>+</mo><mn>5</mn><mo>]</mo>`),
-      p:"Cuánto sube la detección en la ventana tras la palabra clave respecto a la línea base (el token anterior al tramo).",
-      w:"tw = último token que se traslapa con el keyword. Línea base fuera del tramo ⇒ s_base = 0."},
-  D:{tag:"pil", t:"Efecto contrafactual", m:M(`<mi>D</mi><mo>=</mo><msub><mi>Δ</mi><mtext>cue</mtext></msub><mo>−</mo><msub><mi>Δ</mi><mtext>neutro</mtext></msub>`),
-      p:"La métrica principal: cuánto más detecta el AV con el mexicanismo que con su equivalente neutro, en el mismo par.",
-      w:"D > 0 sugiere que el mexicanismo activa una inferencia identitaria que el neutro no activa."},
-  comp:{tag:"inf", t:"Dirección de diferencia", m:M(`<mi>δ</mi><mo>=</mo><msub><mi>h</mi><mi>a</mi></msub><mo>−</mo><msub><mi>h</mi><mi>b</mi></msub><mspace width="0.5em"/><mo>⟶</mo><mspace width="0.5em"/><mtext>AV</mtext><mo>(</mo><mi>δ</mi><mo>)</mo>`),
-      p:"El endpoint /compare describe la resta de los dos brazos: qué cambió en el vector al cambiar solo la palabra.",
-      w:"Útil como análisis secundario del par contrafactual."}
+  h:{tag:"inf",t:"Activación",m:M(`<msub><mi>h</mi><mi>ℓ</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>∈</mo><msup><mi>ℝ</mi><mi>d</mi></msup>`),p:"El vector del flujo residual del modelo fuente en la capa ℓ y la posición t.",w:"d = 1536 en Qwen2.5-1.5B (ℓ = 18); d = 3584 en Qwen2.5-7B (ℓ = 20)."},
+  iny:{tag:"inf",t:"Normalización e inyección",m:M(`<mover><mi>v</mi><mo>~</mo></mover><mo>=</mo><mi>α</mi><mo>·</mo><mfrac><mi>h</mi><mrow><mo>‖</mo><mi>h</mi><mo>‖</mo></mrow></mfrac>`),p:"El vector se reescala a una norma fija α y se escribe en lugar del embedding de un token marcador del prompt del AV.",w:"α = injection_scale del checkpoint."},
+  verb:{tag:"inf",t:"Verbalización",m:M(`<msup><mi>z</mi><mrow><mo>(</mo><mi>k</mi><mo>)</mo></mrow></msup><mo>∼</mo><msub><mi>p</mi><mtext>AV</mtext></msub><mo>(</mo><mi>z</mi><mo>∣</mo><mover><mi>v</mi><mo>~</mo></mover><mo>;</mo><mi>T</mi><mo>)</mo><mo>,</mo><mspace width="0.5em"/><mi>k</mi><mo>=</mo><mn>1</mn><mo>…</mo><mi>K</mi>`),p:"El AV genera K explicaciones para el mismo vector, muestreando con temperatura T.",w:"Piloto v3: K = 5, T = 1.0, sin semilla."},
+  rec:{tag:"inf",t:"Reconstrucción",m:M(`<mover><mi>h</mi><mo>^</mo></mover><mo>=</mo><mi>W</mi><mo>·</mo><msub><mi>g</mi><mtext>AR</mtext></msub><mo>(</mo><mi>z</mi><mo>)</mo>`),p:"El AR lee solo el texto z con un LM truncado (g) y una cabeza lineal (W) predice el vector.",w:"Si el texto no contiene la información, ĥ no puede parecerse a h."},
+  mse:{tag:"inf",t:"Puntuación de fidelidad",m:M(`<msub><mtext>MSE</mtext><mtext>dir</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><msup><mrow><mo>‖</mo><mi>s</mi><mfrac><mover><mi>h</mi><mo>^</mo></mover><mrow><mo>‖</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow></mfrac><mo>−</mo><mi>s</mi><mfrac><mi>h</mi><mrow><mo>‖</mo><mi>h</mi><mo>‖</mo></mrow></mfrac><mo>‖</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>2</mn><mo>(</mo><mn>1</mn><mo>−</mo><mi>cos</mi><mo>(</mo><mi>h</mi><mo>,</mo><mover><mi>h</mi><mo>^</mo></mover><mo>)</mo><mo>)</mo>`),p:"Compara solo la dirección. Rango [0, 4]: ≈0.2 bueno, ≈1 mediocre, 2 ortogonal.",w:"Vale con s = √d. Con mse_scale = 1.0 (1.5B) el valor queda dividido entre d."},
+  fve:{tag:"ent",t:"Varianza explicada (paper)",m:M(`<mtext>FVE</mtext><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup></mrow><mrow><mo>∑</mo><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>¯</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup></mrow></mfrac>`),p:"Qué fracción de la variación de los vectores recupera el AR frente a adivinar siempre el promedio.",w:"Anthropic reporta 0.3–0.4 tras el arranque supervisado y 0.6–0.8 tras la RL conjunta."},
+  ent:{tag:"ent",t:"Objetivo de entrenamiento (paper)",m:M(`<munder><mi>max</mi><mtext>AV</mtext></munder><mspace width="0.3em"/><mi>𝔼</mi><mo>[</mo><mo>−</mo><mi>log</mi><msup><mrow><mo>‖</mo><mi>h</mi><mo>−</mo><mover><mi>h</mi><mo>^</mo></mover><mo>‖</mo></mrow><mn>2</mn></msup><mo>]</mo><mo>−</mo><mi>β</mi><mspace width="0.2em"/><mtext>KL</mtext><mo>(</mo><msub><mi>π</mi><mtext>AV</mtext></msub><mo>‖</mo><msub><mi>π</mi><mn>0</mn></msub><mo>)</mo>`),p:"El AV se premia (GRPO) cuando su texto permite reconstruir el vector; el KL lo mantiene legible. El AR se ajusta por regresión.",w:"Nosotros no entrenamos: usamos checkpoints ya entrenados."},
+  tasa:{tag:"pil",t:"Tasa de detección",m:M(`<msub><mi>s</mi><mi>t</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>K</mi></mfrac><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><mn>𝟙</mn><mo>[</mo><mtext>detector</mtext><mo>(</mo><msubsup><mi>z</mi><mi>t</mi><mrow><mo>(</mo><mi>k</mi><mo>)</mo></mrow></msubsup><mo>)</mo><mo>]</mo>`),p:"De las K explicaciones de la posición t, qué fracción menciona el concepto buscado.",w:"Detector estricto y amplio: D_estricto y D_amplio."},
+  delta:{tag:"pil",t:"Efecto dentro de un brazo",m:M(`<mi>Δ</mi><mo>=</mo><munder><mi>max</mi><mrow><mi>t</mi><mo>∈</mo><mi>W</mi></mrow></munder><msub><mi>s</mi><mi>t</mi></msub><mo>−</mo><msub><mi>s</mi><mtext>base</mtext></msub><mo>,</mo><mspace width="0.5em"/><mi>W</mi><mo>=</mo><mo>[</mo><msub><mi>t</mi><mi>w</mi></msub><mo>,</mo><msub><mi>t</mi><mi>w</mi></msub><mo>+</mo><mn>5</mn><mo>]</mo>`),p:"Cuánto sube la detección en la ventana respecto a la línea base.",w:"Línea base fuera del tramo ⇒ s_base = 0."},
+  D:{tag:"pil",t:"Efecto contrafactual",m:M(`<mi>D</mi><mo>=</mo><msub><mi>Δ</mi><mtext>cue</mtext></msub><mo>−</mo><msub><mi>Δ</mi><mtext>neutro</mtext></msub>`),p:"La métrica principal: cuánto más detecta el AV con el mexicanismo que con su neutro, en el mismo par.",w:"Con 2 pares el p mínimo alcanzable es 0.5; hacen falta unos 10 a 20."},
+  comp:{tag:"inf",t:"Dirección de diferencia",m:M(`<mi>δ</mi><mo>=</mo><msub><mi>h</mi><mi>a</mi></msub><mo>−</mo><msub><mi>h</mi><mi>b</mi></msub><mspace width="0.5em"/><mo>⟶</mo><mspace width="0.5em"/><mtext>AV</mtext><mo>(</mo><mi>δ</mi><mo>)</mo>`),p:"El endpoint /compare describe la resta de los dos brazos.",w:"Análisis secundario del par contrafactual."}
 };
-
-/* ---------- Nodos ---------- */
-const N = [
-  {id:"db",x:20,y:30,w:200,h:64,k:"data",t:"DB de pares mínimos",s:"estructura_mexicanismos.json",
-   q:"Pares contrafactuales: un brazo con el mexicanismo (cue) y otro con su equivalente neutro. La DB no vive en el repo; se lee en solo lectura y se verifica su sha256 al inicio y al final.",
-   a:"data/ (fuera de git) · scripts/cargador_db.py · scripts/db_verificada.py",f:[],l:"Integrar entregas como versión nueva en data/entregas/AAAA-MM-DD/, nunca editar en sitio."},
-  {id:"val",x:260,y:30,w:200,h:64,k:"data",t:"Validador (regla D2)",s:"validar_pares.py · v2",
-   q:"Aplica las reglas duras de la spec rev. 4. Un par con cualquier falla dura se descarta; no se corrige ni se reintenta. En entregas con estado solo entran las “aprobado”.",
-   a:"scripts/validar_pares.py",f:[],l:"Los controles positivo y nulo se identifican por rol; el piloto todavía no los separa en su resumen (P34)."},
-  {id:"tpl",x:500,y:30,w:200,h:64,k:"data",t:"Plantilla y posiciones",s:"messages · tw, ventana, base",
-   q:"Cada brazo se formatea como mensajes de chat. Se eligen las posiciones a describir: tw, la ventana tw..tw+5, la línea base, G1 (último token del usuario) y G3 (token ajeno de control).",
-   a:"scripts/piloto_m1_v3.py · services/nla/chat_template_spans.py",f:["delta"],l:"Criterio v2-2026-10-02 fijado de antemano; no se ajusta después de ver resultados."},
-  {id:"ckpt",x:760,y:30,w:200,h:64,k:"nla",t:"Checkpoints AV / AR",s:"andyx10 1.5B · kitft 7B",
-   q:"Pesos ya entrenados del verbalizador y del reconstructor. Ambos son copias afinadas del modelo fuente: arranque supervisado y luego RL conjunta.",
-   a:"services/nla/.env (NLA_VERBALIZER_MODEL, NLA_RECONSTRUCTOR_MODEL) · nla_meta.yaml",f:["ent","fve"],l:"Entrenados en inglés por terceros: su FVE sobre español mexicano no está medido."},
-  {id:"src15",x:20,y:175,w:170,h:60,k:"src",t:"Qwen2.5-1.5B · L18",s:"modelo fuente",
-   q:"Corre el prompt y lee el flujo residual en la capa 18. Se trunca después de la capa de extracción para ahorrar memoria. Verificado en CPU: arranque 11.4 s, /explain 3.7 s, 7.39 GiB de RAM.",
-   a:"services/nla/server.py (/extract, /explain)",f:["h"],l:"Modelo de desarrollo (M0, M1). Sirve para probar el instrumento, no para la conclusión."},
-  {id:"src7",x:20,y:245,w:170,h:44,k:"src",t:"Qwen2.5-7B · L20",s:"modelo principal",
-   q:"Modelo principal desde M3, el mismo del estudio colombiano. Checkpoints kitft/nla-qwen2.5-7b-L20-av y -ar; d = 3584; mse_scale = √3584 ≈ 59.87. En bf16 pide unos 15 + 11 + 15 GB de GPU.",
-   a:"services/nla/.env · CLAUDE.md del repo",f:["h"],l:"Identificado, no probado. Los valores por defecto de server.py son redirecciones 307: fija los nombres L20 en el .env."},
-  {id:"hl",x:225,y:160,w:36,h:120,k:"vec",t:"h",s:"",
-   q:"Un vector de d números: lo que el modelo “tiene en mente” en ese token antes de responder. Es lo único que el AV ve.",
-   a:"services/nla/nla_inference.py",f:["h","iny"],l:"Su norma l2 varía entre CPUs; se compara solo en dirección."},
-  {id:"av",x:300,y:160,w:180,h:120,k:"nla",shape:"av",t:"Verbalizador (AV)",s:"vector → texto",
-   q:"Copia afinada del modelo fuente. El vector normalizado entra como el embedding de un token marcador y el AV escribe una explicación. Para en </explanation>.",
-   a:"nla_inference.py · vllm_verbalizer.py (GPU) · eager_verbalizer.py (CPU)",f:["iny","verb"],l:"Puede confabular y añadir inferencias. El del 1.5B responde en inglés."},
-  {id:"txt",x:515,y:175,w:260,h:90,k:"txt",t:"Descripción en lenguaje natural",s:"",
-   q:"El cuello de botella del autoencoder: si la información no está en el texto, el AR no puede reconstruir el vector. Es lo que leen los detectores.",
-   a:"respuesta de /explain (campo description)",f:["verb"],l:"El 1.5B no emite la etiqueta de apertura <explanation>; el aviso del log es inofensivo."},
-  {id:"ar",x:810,y:160,w:180,h:120,k:"nla",shape:"ar",t:"Reconstructor (AR)",s:"texto → vector",
-   q:"LM truncado más una cabeza lineal: lee solo el texto y predice el vector original.",
-   a:"nla_inference.py · clase NLAReconstructor",f:["rec"],l:"Mide si el texto alcanza para reconstruir, no si cada afirmación es verdadera."},
-  {id:"hhat",x:1025,y:160,w:36,h:120,k:"vec",t:"ĥ",s:"",
-   q:"El vector reconstruido. Se compara con h por coseno.",
-   a:"/score, /describe",f:["rec","mse"],l:""},
-  {id:"score",x:545,y:300,w:200,h:42,k:"nla",pill:true,t:"Puntuación",s:"MSE = 2(1 − cos)",
-   q:"Cierra el lazo: qué tan bien la explicación capturó el vector. Así se marca cuánto confiar en cada descripción.",
-   a:"services/nla/server.py (/score) · NLAReconstructor.score",f:["mse"],l:"Con el 1.5B el sidecar declara mse_scale = 1.0. Verifícalo al cargar cada fuente."},
-  {id:"rem",x:20,y:400,w:160,h:64,k:"out",t:"Remuestreo",s:"K = 5 · T = 1.0",
-   q:"Cada posición se describe K veces. Lo que se repite entre muestras y entre tokens vecinos es más confiable que una sola explicación.",
-   a:"scripts/piloto_m1_v3.py",f:["verb","tasa"],l:"El umbral de estabilidad se fija antes de ver resultados y no se mueve."},
-  {id:"det",x:212,y:400,w:160,h:64,k:"out",t:"Detectores",s:"estricto · amplio",
-   q:"Marcan si cada explicación menciona el concepto buscado, con dos listas de claves (estricta y amplia).",
-   a:"scripts/piloto_m1_v2.py (KEYWORDS) · piloto_m1_v3.py",f:["tasa"],l:"Deben cubrir inglés y español mientras el AV responda en inglés."},
-  {id:"efe",x:404,y:400,w:160,h:64,k:"out",t:"Efecto Δ y D",s:"cue − neutro",
-   q:"Δ por brazo y D entre brazos. D_estricto es la métrica principal y D_amplio la secundaria. En tw corren las secundarias: vector aleatorio, otras posiciones G1 y G3, ablación.",
-   a:"scripts/piloto_m1_v3.py",f:["delta","D","comp"],l:"Un 0/5 en el 1.5B es un límite del instrumento, no evidencia sobre sesgo."},
-  {id:"res",x:596,y:400,w:160,h:64,k:"out",t:"Resultados",s:"resultados.json · jsonl",
-   q:"experimentos/m1/v3/<corrida>/: resultados.json al cerrar cada par y progreso.jsonl en vivo. Guardan la huella sha256 de la DB al inicio y al final.",
-   a:"experimentos/m1/v3/ (no se versiona)",f:[],l:"Si la huella cambia durante la corrida, se marca huella_cambiada y sale con 1."},
-  {id:"web",x:788,y:400,w:160,h:64,k:"out",t:"Webapp nla-mx",s:"Next.js · /nla-mx",
-   q:"Fork recortado de Neuronpedia (solo la pestaña NLA) más la vista /nla-mx con las corridas del piloto en vivo.",
-   a:"apps/webapp/app/nla-mx · apps/webapp/lib/nla-mx",f:[],l:"Compila, pero no se ha levantado con Postgres ni ComputeHost; a .env.example le faltan la URL del servicio y NLA_SERVER_SECRET."},
-  {id:"tes",x:980,y:400,w:160,h:64,k:"out",t:"Tesina",s:"Claude Doc",
-   q:"Bitácora, estado de la aportación y cifras. Cada avance que cambie datos, spec, lotes o resultados se registra ahí.",
-   a:"claude.ai/code/artifact/1d60cdaf-…",f:[],l:""}
-];
-
-/* ---------- SVG ---------- */
-const svg = document.getElementById("svg"), NS = "http://www.w3.org/2000/svg";
-const el = (n, a = {}, txt) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
-const defs = el("defs");
-for (const [id, cls] of [["arr", "ah"], ["arro", "ah o"]]) {
-  const m = el("marker", {id, viewBox:"0 0 10 10", refX:"9", refY:"5", markerWidth:"7", markerHeight:"7", orient:"auto-start-reverse"});
-  m.appendChild(el("path", {d:"M0,0 L10,5 L0,10 z", class:cls})); defs.appendChild(m);
-}
-svg.appendChild(defs);
-const edge = (d, cls = "", mk = "arr") => svg.appendChild(el("path", {d, class:"edge " + cls, "marker-end":`url(#${mk})`}));
-
-svg.appendChild(el("text", {x:20, y:18, class:"lane"}, "1 · DATOS Y POSICIONES"));
-svg.appendChild(el("text", {x:20, y:152, class:"lane"}, "2 · AUTOENCODER"));
-svg.appendChild(el("text", {x:20, y:388, class:"lane"}, "3 · MEDICIÓN Y SALIDA"));
-
-edge("M220,62 H258"); edge("M460,62 H498");
-edge("M600,94 V125 H105 V173");
-edge("M820,94 V140 H390 V170", "dash"); edge("M900,94 V170", "dash");
-edge("M190,205 H223"); edge("M261,220 H302"); edge("M480,220 H513"); edge("M775,220 H812"); edge("M990,220 H1023");
-edge("M1043,280 V321 H747", "loop", "arro");
-edge("M545,321 H243 V284", "loop", "arro");
-edge("M645,342 V372 H100 V398");
-for (const x of [180, 372, 564, 756, 948]) edge(`M${x},432 H${x + 30}`);
-
-const nodeEls = {};
-for (const n of N) {
-  const g = el("g", {class:`node k-${n.k}`, tabindex:"0", role:"button", "aria-label":n.t, "data-id":n.id});
-  let box, cx = n.x + n.w / 2;
-  if (n.shape === "av") box = el("polygon", {class:"box", points:`${n.x},${n.y} ${n.x + n.w},${n.y + 30} ${n.x + n.w},${n.y + n.h - 30} ${n.x},${n.y + n.h}`});
-  else if (n.shape === "ar") box = el("polygon", {class:"box", points:`${n.x},${n.y + 30} ${n.x + n.w},${n.y} ${n.x + n.w},${n.y + n.h} ${n.x},${n.y + n.h - 30}`});
-  else box = el("rect", {class:"box", x:n.x, y:n.y, width:n.w, height:n.h, rx:n.pill ? n.h / 2 : (n.k === "txt" ? 14 : 6)});
-  g.appendChild(box);
-  if (n.k === "vec") {
-    for (let i = 0; i < 10; i++) g.appendChild(el("rect", {class:"vecstripe", x:n.x + 4, y:n.y + 6 + i * 11, width:n.w - 8, height:7, opacity:(0.08 + ((i * 37) % 10) / 22).toFixed(2)}));
-    const lab = el("text", {x:cx, y:n.y - 8, "text-anchor":"middle", class:"n-title"});
-    lab.textContent = n.id === "hl" ? "hₗ" : "ĥₗ"; g.appendChild(lab);
-  } else if (n.k === "txt") {
-    g.appendChild(el("text", {x:cx, y:n.y - 8, "text-anchor":"middle", class:"n-title"}, n.t));
-    const q1 = el("text", {x:cx, y:n.y + 36, "text-anchor":"middle", class:"quote"}, "“Mexican colloquial register; speaker");
-    const q2 = el("text", {x:cx, y:n.y + 54, "text-anchor":"middle", class:"quote"}, "framed as working-class, from Mexico City…”");
-    g.append(q1, q2);
-    g.appendChild(el("text", {x:cx, y:n.y + 76, "text-anchor":"middle", class:"n-sub"}, "ejemplo ilustrativo, no es salida real"));
-  } else {
-    const ty = n.pill ? n.y + 18 : (n.shape ? n.y + n.h / 2 - 2 : n.y + (n.h > 50 ? 27 : 19));
-    g.appendChild(el("text", {x:cx, y:ty, "text-anchor":"middle", class:"n-title"}, n.t));
-    if (n.s) g.appendChild(el("text", {x:cx, y:ty + 16, "text-anchor":"middle", class:"n-sub"}, n.s));
-  }
-  const dx = n.shape ? n.x + n.w - 14 : n.x + n.w - 10, dy = n.shape === "ar" ? n.y + 12 : (n.shape === "av" ? n.y + 42 : n.y + 10);
-  const dot = el("circle", {cx:dx, cy:dy, r:5, class:"stdot sin"}); g.appendChild(dot);
-  const core = el("circle", {cx:dx, cy:dy, r:1.8, class:"stcore", visibility:"hidden"}); g.appendChild(core);
-  g.addEventListener("click", () => select(n.id));
-  g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(n.id); } });
-  svg.appendChild(g); nodeEls[n.id] = {g, dot, core};
-}
-
-/* ---------- Fórmulas ---------- */
 const tagName = {inf:"inferencia", ent:"entrenamiento", pil:"piloto"};
 document.getElementById("formulas").innerHTML = Object.values(F).map(f =>
-  `<article class="fcard"><span class="tag ${f.tag}">${tagName[f.tag]}</span><h3>${f.t}</h3><div class="math">${f.m}</div><p>${f.p}</p><p class="where">${f.w}</p></article>`).join("");
+  `<article class="fcard"><span class="ftag ${f.tag}">${tagName[f.tag]}</span><h3>${f.t}</h3><div class="math">${f.m}</div><p>${f.p}</p><p class="where">${f.w}</p></article>`).join("");
+
+/* ---------- Piezas ---------- */
+const N = [
+  {id:"db",b:"b1",t:"DB de pares mínimos",q:"Pares contrafactuales escritos a mano. La DB no vive en el repo; se lee en solo lectura y se verifica su sha256 al inicio y al final.",a:"data/ (fuera de git) · scripts/cargador_db.py · scripts/db_verificada.py",f:[],l:"Las entregas se integran como versión nueva en data/entregas/AAAA-MM-DD/, nunca se editan en sitio."},
+  {id:"val",b:"b2",t:"Validador (regla D2)",q:"Aplica las reglas duras de la spec rev. 4. Un par con cualquier falla dura se descarta; no se corrige ni se reintenta.",a:"scripts/validar_pares.py",f:[],l:"Los controles se identifican por rol; el piloto todavía no los separa en su resumen (P34)."},
+  {id:"tpl",b:"b2",t:"Plantilla y posiciones",q:"Cada brazo se formatea como mensajes de chat y se eligen tw, la ventana, la línea base, G1 y G3.",a:"scripts/piloto_m1_v3.py · services/nla/chat_template_spans.py",f:["delta"],l:"Criterio v2-2026-10-02 fijado de antemano."},
+  {id:"src15",b:"b3",t:"Qwen2.5-1.5B · L18",q:"Modelo de desarrollo. Verificado en CPU: arranque 11.4 s, /explain 3.7 s, 7.39 GiB de RAM.",a:"services/nla/server.py (/extract, /explain)",f:["h"],l:"Sirve para probar el instrumento, no para la conclusión."},
+  {id:"src7",b:"b3",t:"Qwen2.5-7B · L20",q:"Modelo principal desde M3, el del estudio colombiano. d = 3584, mse_scale = √3584. En bf16 pide unos 15 + 11 + 15 GB de GPU.",a:"services/nla/.env · CLAUDE.md del repo",f:["h"],l:"Identificado, no probado. Fija los nombres L20 en el .env."},
+  {id:"hl",b:"b3",t:"Activación hₗ",q:"Un vector de d números: lo que el modelo tiene en mente en ese token. Es lo único que el AV ve.",a:"services/nla/nla_inference.py",f:["h","iny"],l:""},
+  {id:"ckpt",b:"b4",t:"Checkpoints AV / AR",q:"Pesos ya entrenados por terceros: arranque supervisado y RL conjunta.",a:"services/nla/.env · nla_meta.yaml",f:["ent","fve"],l:"Entrenados en inglés: su FVE sobre español mexicano no está medido."},
+  {id:"av",b:"b4",t:"Verbalizador (AV)",q:"El vector normalizado entra como embedding de un token marcador y el AV escribe una explicación.",a:"nla_inference.py · vllm_verbalizer.py · eager_verbalizer.py",f:["iny","verb"],l:"Puede confabular y añadir inferencias. El del 1.5B responde en inglés."},
+  {id:"txt",b:"b4",t:"Descripción",q:"El cuello de botella: si la información no está en el texto, el AR no reconstruye el vector.",a:"campo description de /explain",f:["verb"],l:""},
+  {id:"ar",b:"b4",t:"Reconstructor (AR)",q:"LM truncado más cabeza lineal: lee solo el texto y predice el vector.",a:"nla_inference.py · NLAReconstructor",f:["rec"],l:"Mide si el texto alcanza para reconstruir, no si cada afirmación es verdadera."},
+  {id:"hhat",b:"b4",t:"Reconstrucción ĥₗ",q:"El vector reconstruido; se compara con h por coseno.",a:"/score, /describe",f:["rec","mse"],l:""},
+  {id:"score",b:"b5",t:"Puntuación",q:"Cierra el lazo: qué tan bien la explicación capturó el vector.",a:"server.py (/score) · NLAReconstructor.score",f:["mse"],l:"En el 1.5B el sidecar trae mse_scale = 1.0."},
+  {id:"rem",b:"b5",t:"Remuestreo",q:"K muestras por posición; R3 mide cuánto coinciden entre sí.",a:"scripts/piloto_m1_v3.py · scripts/robustez.py",f:["verb","tasa"],l:"El umbral de estabilidad se fija antes de ver resultados."},
+  {id:"det",b:"b6",t:"Detectores",q:"Listas de claves estricta y amplia; R5 agrega un léxico bilingüe por categoría.",a:"piloto_m1_v2.py (KEYWORDS) · robustez.py (LEXICO)",f:["tasa"],l:"Deben cubrir inglés y español."},
+  {id:"efe",b:"b6",t:"Efecto Δ y D",q:"Δ por brazo y D entre brazos. D_estricto es la métrica principal. R6 agrega permutación, bootstrap y potencia.",a:"scripts/piloto_m1_v3.py · scripts/robustez.py",f:["delta","D","comp"],l:"Un D = 0 en el 1.5B es un límite del instrumento."},
+  {id:"res",b:"b7",t:"Resultados",q:"resultados.json al cerrar cada par y progreso.jsonl en vivo, con la huella sha256 de la DB al inicio y al final.",a:"experimentos/m1/v3/ (no se versiona)",f:[],l:""},
+  {id:"web",b:"b7",t:"Webapp nla-mx",q:"Fork recortado de Neuronpedia más la vista /nla-mx de corridas en vivo.",a:"apps/webapp/app/nla-mx",f:[],l:"Compila, pero no se ha levantado con Postgres ni ComputeHost."},
+  {id:"tes",b:"b7",t:"Tesina",q:"Bitácora, estado de la aportación y cifras.",a:"Claude Doc de la tesina",f:[],l:""}
+];
+
+/* ---------- Diagramas generados ---------- */
+(function pair(){
+  const pre = "Hoy me levanté tarde y de camino al trabajo compré".split(" ");
+  const post = "para desayunar. ¿Me recomiendas opciones".split(" ");
+  const row = (lab, cls, span) => {
+    let h = `<div class="strip"><span class="armlab ${cls === "cue" ? "c" : "n"}">${lab}</span>`;
+    pre.forEach((w, i) => h += `<div class="w same"><span>${esc(w)}</span><small>${i}</small></div>`);
+    h += `<div class="w ${cls}"><span>${esc(span)}</span><small>10</small></div>`;
+    post.forEach((w, i) => h += `<div class="w win${i > 4 ? " fade" : ""}"><span>${esc(w)}</span><small>${13 + i}</small></div>`);
+    return h + `<div class="w fade"><span>…</span><small></small></div></div>`;
+  };
+  document.getElementById("pair").innerHTML = row("cue", "cue", "unos chilaquiles verdes") + row("neutro", "neu", "unos huevos revueltos");
+})();
+(function toks(){
+  const T = [["…compré",""],["unos","base"],[" chil","kw"],["aqu","kw"],["iles","kw"],[" verdes","tw"],[" para","w1"],[" desay","w2"],["unar","w3"],[".","w4"],[" ¿Me","w5"],[" recom",""],["…?",""]];
+  const lab = {base:"base", tw:"tw", w1:"tw+1", w2:"tw+2", w3:"tw+3", w4:"tw+4", w5:"tw+5", kw:"keyword"};
+  let h = `<div class="strip"><div class="w"><span style="border-style:dotted">Desde</span><small>G3</small></div><div class="w fade"><span>…</span><small></small></div>`;
+  for (const [t, k] of T) {
+    const cls = k === "tw" ? "cue" : (k === "kw" ? "cue" : (k.startsWith("w") ? "win" : (k === "base" ? "same" : "fade")));
+    h += `<div class="w ${cls}"><span${k === "base" ? ' style="border-style:dashed"' : ""}>${esc(t)}</span><small>${lab[k] || ""}</small></div>`;
+  }
+  h += `<div class="w"><span style="border-style:dotted">?</span><small>G1</small></div></div>`;
+  document.getElementById("toks").innerHTML = h;
+})();
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a = {}, txt) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
+(function svgBits(){
+  const tr = document.getElementById("tokrow");
+  ["Hoy","me","…","unos","chil","aqu","iles"].forEach((t, i) => {
+    tr.appendChild(el("rect", {x:10 + i * 41, y:30, width:37, height:24, rx:4, class:i >= 4 ? "box-b" : "box-n"}));
+    tr.appendChild(el("text", {x:28.5 + i * 41, y:46, "text-anchor":"middle", class:"s-s"}, t));
+    tr.appendChild(el("rect", {x:14 + i * 41, y:64, width:29, height:24, rx:4, class:"box-n"}));
+    tr.appendChild(el("text", {x:28.5 + i * 41, y:80, "text-anchor":"middle", class:"s-s"}, "t" + i));
+  });
+  const m = document.getElementById("mask");
+  for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++)
+    m.appendChild(el("rect", {x:660 + c * 20, y:34 + r * 20, width:17, height:17, rx:2, class:c <= r ? "cell-on" : "cell-off", opacity:c <= r ? (0.35 + 0.65 * ((r * 7 + c) % 5) / 4).toFixed(2) : 1}));
+  m.appendChild(el("text", {x:660, y:186, class:"s-s"}, "fila = token · col = lo que ve"));
+  for (const [id, x, y] of [["hvec", 582, 64], ["hvec2", 12, 90], ["hvec3", 810, 90]]) {
+    const g = document.getElementById(id);
+    for (let i = 0; i < 10; i++) g.appendChild(el("rect", {x:x + 4, y:y + 6 + i * 11, width:26, height:7, class:"vs", opacity:(0.15 + ((i * 37 + x) % 10) / 14).toFixed(2)}));
+  }
+})();
 
 /* ---------- Estado ---------- */
-/* Copia congelada para vistas sin base (por ejemplo, GitHub Pages). */
 const SNAPSHOT = {fecha:"2026-10-15", etapas:{
   db:{estado:"en_curso",nota:"Hoja de etiquetado en llenado manual."},
   val:{estado:"hecho",nota:"Criterio validador-v2-2026-10-11 (spec rev. 4)."},
@@ -334,7 +608,7 @@ const SNAPSHOT = {fecha:"2026-10-15", etapas:{
   av:{estado:"en_curso",nota:"Funciona en 1.5B, pero describe en inglés."},
   score:{estado:"en_curso",nota:"El mse del 1.5B sale dividido entre d; usar mse_dir = 2(1 − cos)."},
   rem:{estado:"en_curso",nota:"K = 5 y T = 1.0."},
-  det:{estado:"hecho",nota:"Detectores estricto y amplio; léxico bilingüe congelado para el 7B."},
+  det:{estado:"hecho",nota:"Léxico bilingüe congelado para el 7B."},
   efe:{estado:"en_curso",nota:"Faltan el 7B y al menos 10 a 20 pares experimentales."},
   web:{estado:"en_curso",nota:"Compila; no se ha levantado con Postgres."},
   tes:{estado:"en_curso"}},
@@ -342,71 +616,72 @@ const SNAPSHOT = {fecha:"2026-10-15", etapas:{
   {fecha:"2026-10-11",texto:"Primera corrida del piloto v3 con pares reales en el 1.5B. El AV describe en inglés."},
   {fecha:"2026-10-14",texto:"Guía de replicación reverificada en clon limpio."},
   {fecha:"2026-10-15",texto:"Mapa de la tubería publicado y análisis de robustez del instrumento."}]};
-let status = {}, selected = "av", db = null, canWrite = false;
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function paintNodes() {
+let status = {}, open = {}, db = null, canWrite = false;
+const stOf = id => status[id]?.estado in ST ? status[id].estado : "sin";
+
+function paint() {
   const counts = {hecho:0, en_curso:0, pendiente:0, bloqueado:0};
-  for (const n of N) {
-    const s = status[n.id]?.estado in ST ? status[n.id].estado : "sin";
-    if (s in counts) counts[s]++;
-    const {g, dot, core} = nodeEls[n.id];
-    dot.setAttribute("class", "stdot " + s);
-    core.setAttribute("visibility", s === "en_curso" ? "visible" : "hidden");
-    g.classList.remove("st-hecho", "st-en_curso", "st-pendiente", "st-bloqueado", "st-sin");
-    g.classList.add("st-" + s);
-    g.classList.toggle("sel", n.id === selected);
-    g.setAttribute("aria-label", `${n.t}: ${ST[s]}`);
-  }
+  for (const n of N) { const s = stOf(n.id); if (s in counts) counts[s]++; }
   for (const k in counts) document.getElementById("c-" + k).textContent = counts[k];
+  for (const box of document.querySelectorAll(".pieces")) {
+    const b = box.dataset.band;
+    box.innerHTML = N.filter(n => n.b === b).map(n =>
+      `<button type="button" class="piece" data-id="${n.id}" aria-expanded="${open[b] === n.id}"><span class="g ${stOf(n.id)}"></span>${esc(n.t)}</button>`).join("");
+  }
+  for (const slot of document.querySelectorAll(".ficha-slot")) renderFicha(slot.dataset.band, slot);
 }
-function select(id) { selected = id; try { localStorage.setItem("nla-sel", id); } catch (e) {} paintNodes(); renderPanel(); }
-function renderPanel() {
-  const n = N.find(x => x.id === selected), st = status[n.id] || {}, s = st.estado in ST ? st.estado : "sin";
-  const title = n.k === "vec" ? (n.id === "hl" ? "Activación hₗ" : "Reconstrucción ĥₗ") : n.t;
-  let html = `<span class="eyebrow">ficha</span><h2>${esc(title)}</h2>
-    <div class="row"><span class="pill"><span class="g ${s}"></span>${ST[s]}</span>${st.fecha ? `<span class="sync">act. ${esc(st.fecha)}</span>` : ""}</div>
+function renderFicha(b, slot) {
+  const id = open[b]; if (!id) { slot.innerHTML = ""; return; }
+  const n = N.find(x => x.id === id), st = status[id] || {}, s = stOf(id);
+  let h = `<div class="ficha"><div class="row"><h3>${esc(n.t)}</h3><span class="pill"><span class="g ${s}"></span>${ST[s]}</span>${st.fecha ? `<span class="sync">act. ${esc(st.fecha)}</span>` : ""}</div>
     ${st.nota ? `<p class="note">${esc(st.nota)}</p>` : ""}
-    <dl><div><dt>qué hace</dt><dd>${esc(n.q)}</dd></div>
-    <div><dt>dónde vive</dt><dd class="mono">${esc(n.a)}</dd></div></dl>`;
-  for (const k of n.f) html += `<div><span class="eyebrow">${esc(F[k].t)}</span><div class="math">${F[k].m}</div></div>`;
-  if (n.l) html += `<p class="warn">${esc(n.l)}</p>`;
-  if (n.id === "tes") html += `<a href="https://claude.ai/code/artifact/1d60cdaf-a6c9-4713-96cc-7ca91f981bd5">Abrir la tesina</a>`;
-  if (canWrite) html += `<form class="edit" id="ed"><label for="ed-st">Actualizar estado</label>
-      <select id="ed-st">${["hecho","en_curso","pendiente","bloqueado"].map(k => `<option value="${k}"${k === s ? " selected" : ""}>${ST[k]}</option>`).join("")}</select>
-      <label for="ed-nota">Nota</label><textarea id="ed-nota">${esc(st.nota)}</textarea>
-      <button type="submit">Guardar estado</button><span class="msg" id="ed-msg"></span></form>`;
-  const p = document.getElementById("panel"); p.innerHTML = html;
-  const f = document.getElementById("ed");
-  if (f) f.addEventListener("submit", async e => {
-    e.preventDefault(); const msg = document.getElementById("ed-msg");
-    const body = {estado:document.getElementById("ed-st").value, nota:document.getElementById("ed-nota").value.trim(), fecha:new Date().toISOString().slice(0, 10)};
-    msg.textContent = "Guardando…";
-    try { await db.doc("etapas/" + n.id).set(body); msg.textContent = "Guardado."; }
-    catch (err) { msg.textContent = err?.code === "invalid_argument" ? "No tienes permiso para editar el estado." : "No se pudo guardar. Intenta de nuevo."; }
-  });
+    <dl><div><dt>qué hace</dt><dd>${esc(n.q)}</dd></div><div><dt>dónde vive</dt><dd class="mono">${esc(n.a)}</dd></div></dl>`;
+  for (const k of n.f) h += `<div><span class="eyebrow">${esc(F[k].t)}</span><div class="math">${F[k].m}</div></div>`;
+  if (n.l) h += `<p class="warn">${esc(n.l)}</p>`;
+  if (canWrite) h += `<form class="edit" data-id="${id}"><label for="st-${id}">Actualizar estado</label>
+    <select id="st-${id}">${["hecho","en_curso","pendiente","bloqueado"].map(k => `<option value="${k}"${k === s ? " selected" : ""}>${ST[k]}</option>`).join("")}</select>
+    <label for="nt-${id}">Nota</label><textarea id="nt-${id}">${esc(st.nota)}</textarea>
+    <button type="submit">Guardar estado</button><span class="msg"></span></form>`;
+  slot.innerHTML = h + "</div>";
 }
+function toggle(id) {
+  const n = N.find(x => x.id === id); if (!n) return;
+  open[n.b] = open[n.b] === id ? null : id; paint();
+  const slot = document.querySelector(`.ficha-slot[data-band="${n.b}"]`);
+  if (open[n.b] && slot) slot.scrollIntoView({block:"nearest", behavior:"smooth"});
+}
+document.addEventListener("click", e => {
+  const p = e.target.closest(".piece, .hit"); if (p) toggle(p.dataset.id);
+});
+document.addEventListener("keydown", e => {
+  const p = e.target.closest?.(".hit"); if (p && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); toggle(p.dataset.id); }
+});
+document.addEventListener("submit", async e => {
+  const f = e.target.closest("form.edit"); if (!f) return; e.preventDefault();
+  const id = f.dataset.id, msg = f.querySelector(".msg");
+  const body = {estado:f.querySelector("select").value, nota:f.querySelector("textarea").value.trim(), fecha:new Date().toISOString().slice(0, 10)};
+  msg.textContent = "Guardando…";
+  try { await db.doc("etapas/" + id).set(body); msg.textContent = "Guardado."; }
+  catch (err) { msg.textContent = err?.code === "invalid_argument" ? "No tienes permiso para editar el estado." : "No se pudo guardar. Intenta de nuevo."; }
+});
 function renderLog(entries) {
   const ul = document.getElementById("log");
-  if (!entries.length) { ul.innerHTML = `<li><span></span><span class="empty">Sin entradas todavía. Claude agrega una por cada avance.</span></li>`; return; }
+  if (!entries.length) { ul.innerHTML = `<li><span></span><span class="muted">Sin entradas todavía.</span></li>`; return; }
   ul.innerHTML = entries.slice().sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)))
     .map(e => `<li><time>${esc(e.fecha)}</time><span>${esc(e.texto)}</span></li>`).join("");
 }
 
-try { const s = localStorage.getItem("nla-sel"); if (s && N.some(n => n.id === s)) selected = s; } catch (e) {}
-paintNodes(); renderPanel();
-
+open.b4 = "av";
+paint();
 (async () => {
   const sync = document.getElementById("sync");
   db = await window.claude?.use?.("db") ?? null;
-  if (!db) {
-    status = SNAPSHOT.etapas; sync.textContent = "estado congelado al " + SNAPSHOT.fecha;
-    paintNodes(); renderPanel(); renderLog(SNAPSHOT.bitacora); return;
-  }
+  if (!db) { status = SNAPSHOT.etapas; sync.textContent = "estado congelado al " + SNAPSHOT.fecha; paint(); renderLog(SNAPSHOT.bitacora); return; }
   try { const user = await claude.use("user"); canWrite = !!(user && user.canEdit()); } catch (e) {}
   db.collection("etapas").onSnapshot(snap => {
     status = {}; for (const d of snap.docs) status[d.id] = d.data();
     sync.textContent = snap.empty ? "sin estados guardados aún" : "estado en vivo";
-    paintNodes(); renderPanel();
+    paint();
   }, () => { sync.textContent = "estado sin conexión"; });
   db.doc("avance/bitacora").onSnapshot(d => renderLog(d.exists ? (d.data().entradas || []) : []), () => renderLog([]));
 })();
